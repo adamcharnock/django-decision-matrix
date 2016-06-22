@@ -1,0 +1,14 @@
+{% for criterion in criteria %}
+<li>
+    {{ criterion }}
+    <a href="{% url 'criteria:update' criterion.uuid %}">Edit</a>,
+    <form action="{% url 'criteria:delete' criterion.uuid %}" method="delete">
+        {% csrf_token %}
+        <button>Delete</button>
+    </form>
+</li>
+{% empty %}
+No criteria
+{% endfor %}
+
+<a href="{% url 'criteria:create' %}">Create</a>

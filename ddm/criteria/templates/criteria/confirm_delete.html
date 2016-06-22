@@ -1,0 +1,6 @@
+Are you sure?
+<form action="{% url 'criteria:delete' criterion.uuid %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button>Delete</button>
+</form>

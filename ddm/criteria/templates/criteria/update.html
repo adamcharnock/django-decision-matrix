@@ -1,0 +1,5 @@
+<form action="{% url 'criteria:update' criterion.uuid %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button>Submit</button>
+</form>

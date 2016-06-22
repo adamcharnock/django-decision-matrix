@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'ddm.core',
+    'ddm.criteria',
 ]
 
 MIDDLEWARE = [

@@ -6,8 +6,8 @@ class OptionAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Criteron)
-class CriteronAdmin(admin.ModelAdmin):
+@admin.register(models.Criterion)
+class CriterionAdmin(admin.ModelAdmin):
     pass
 
 

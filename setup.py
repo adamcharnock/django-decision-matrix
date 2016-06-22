@@ -20,5 +20,6 @@ setup(
         'path.py',
         'django>=1.10b1',
         'django-extensions',
+        'django-smalluuid>=0.1.2',
     ],
 )
