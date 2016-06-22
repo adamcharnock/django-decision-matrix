@@ -1,5 +1,10 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
 <form action="{% url 'criteria:create' %}" method="post">
     {% csrf_token %}
-    {{form}}
+    {% bootstrap_form form %}
     <button>Submit</button>
 </form>
+{% endblock %}

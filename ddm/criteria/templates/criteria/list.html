@@ -1,14 +1,40 @@
-{% for criterion in criteria %}
-<li>
-    {{ criterion }}
-    <a href="{% url 'criteria:update' criterion.uuid %}">Edit</a>,
-    <form action="{% url 'criteria:delete' criterion.uuid %}" method="delete">
-        {% csrf_token %}
-        <button>Delete</button>
-    </form>
-</li>
-{% empty %}
-No criteria
-{% endfor %}
+{% extends 'base/layout.html' %}
+{% load bootstrap3 %}
 
-<a href="{% url 'criteria:create' %}">Create</a>
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for criterion in criteria %}
+        <tr>
+            <td>{{ criterion.name }}</td>
+            <td>{{ criterion.category }}</td>
+            <td>
+                <a href="{% url 'criteria:update' criterion.uuid %}" class="btn btn-default btn-xs">Edit</a>
+            </td>
+            <td>
+                <form action="{% url 'criteria:delete' criterion.uuid %}" method="delete">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-xs">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+        <td colspan="4">No criteria</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
+{% endblock %}

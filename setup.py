@@ -21,5 +21,6 @@ setup(
         'django>=1.10b1',
         'django-extensions',
         'django-smalluuid>=0.1.2',
+        'django-bootstrap3>=7.0.1',
     ],
 )
