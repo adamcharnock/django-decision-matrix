@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^options/', include('ddm.options.urls', namespace='options')),
     url(r'^criteria/', include('ddm.criteria.urls', namespace='criteria')),
     url(r'^categories/', include('ddm.categories.urls', namespace='categories')),
+    url(r'^weighting/', include('ddm.weighting.urls', namespace='weighting')),
 ]

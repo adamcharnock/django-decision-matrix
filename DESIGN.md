@@ -60,8 +60,9 @@ Additional:
 Interfaces
 ----------
 
-  * Criteria management (incl weighting, category selection)
-  * Option management
-  * Category management
+  * ~~Criteria management~~
+  * ~~Option management~~
+  * ~~Category management~~
+  * Weighting
   * Scoring
   * Report

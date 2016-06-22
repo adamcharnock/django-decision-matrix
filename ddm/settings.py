@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'ddm.options',
     'ddm.criteria',
     'ddm.categories',
+    'ddm.weighting',
 ]
 
 MIDDLEWARE = [
