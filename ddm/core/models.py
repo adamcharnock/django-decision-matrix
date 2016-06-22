@@ -25,7 +25,7 @@ class Weight(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='weights')
     criterion = models.ForeignKey('criterion', related_name='weights')
-    value = models.SmallIntegerField()
+    value = models.IntegerField()
 
 
 class Score(TimeStampedModel):
@@ -33,7 +33,7 @@ class Score(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='scores')
     criterion = models.ForeignKey('criterion', related_name='scores')
     option = models.ForeignKey('option', related_name='scores')
-    value = models.SmallIntegerField()
+    value = models.IntegerField()
 
 
 class Category(TimeStampedModel):
