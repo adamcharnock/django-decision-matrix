@@ -1,0 +1,38 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for option in options %}
+        <tr>
+            <td>{{ option.name }}</td>
+            <td>
+                <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
+            </td>
+            <td>
+                <form action="{% url 'options:delete' option.uuid %}" method="delete">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-xs">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+        <td colspan="3">No options</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<a href="{% url 'options:create' %}" class="btn btn-primary">Create</a>
+{% endblock %}

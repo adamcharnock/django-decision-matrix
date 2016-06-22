@@ -1,0 +1,10 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form action="{% url 'options:update' option.uuid %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button>Submit</button>
+</form>
+{% endblock %}

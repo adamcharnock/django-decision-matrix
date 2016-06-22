@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bootstrap3',
 
     'ddm.core',
+    'ddm.options',
     'ddm.criteria',
 ]
 
