@@ -56,3 +56,12 @@ Additional:
  * Allow multiple people to score & weight, then offer comparisons.
    * Link each weight to the given user
    * Link each score to the given user
+
+Interfaces
+----------
+
+  * Criteria management (incl weighting, category selection)
+  * Option management
+  * Category management
+  * Scoring
+  * Report
