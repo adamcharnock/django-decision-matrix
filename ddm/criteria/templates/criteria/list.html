@@ -21,8 +21,7 @@
                 <a href="{% url 'criteria:update' criterion.uuid %}" class="btn btn-default btn-xs">Edit</a>
             </td>
             <td>
-                <form action="{% url 'criteria:delete' criterion.uuid %}" method="delete">
-                    {% csrf_token %}
+                <form action="{% url 'criteria:delete' criterion.uuid %}" method="get">
                     <button class="btn btn-danger btn-xs">Delete</button>
                 </form>
             </td>

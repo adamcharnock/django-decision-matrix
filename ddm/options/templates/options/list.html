@@ -19,8 +19,7 @@
                 <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
             </td>
             <td>
-                <form action="{% url 'options:delete' option.uuid %}" method="delete">
-                    {% csrf_token %}
+                <form action="{% url 'options:delete' option.uuid %}" method="get">
                     <button class="btn btn-danger btn-xs">Delete</button>
                 </form>
             </td>

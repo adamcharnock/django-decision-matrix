@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<form action="{% url 'options:create' %}" method="post">
+<form action="{% url 'categories:create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
     <button class="btn btn-success">Create</button>

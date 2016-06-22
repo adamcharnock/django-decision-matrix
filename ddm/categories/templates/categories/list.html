@@ -1,0 +1,43 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Criteria</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+            {% with category.criteria.count as total_criteria %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ total_criteria }}</td>
+                <td>
+                    <a href="{% url 'categories:update' category.uuid %}" class="btn btn-default btn-xs">Edit</a>
+                </td>
+                <td>
+                    {% if not total_criteria %}
+                    <form action="{% url 'categories:delete' category.uuid %}" method="get">
+                        <button class="btn btn-danger btn-xs">Delete</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endwith %}
+            {% empty %}
+            <tr>
+            <td colspan="3">No categories</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<a href="{% url 'categories:create' %}" class="btn btn-primary">Create</a>
+{% endblock %}

@@ -5,6 +5,6 @@
 <form action="{% url 'criteria:create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button>Submit</button>
+    <button class="btn btn-success">Create</button>
 </form>
 {% endblock %}

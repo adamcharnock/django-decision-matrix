@@ -11,7 +11,7 @@ class Option(TimeStampedModel):
 
 class Criterion(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
-    category = models.ForeignKey('category')
+    category = models.ForeignKey('category', related_name='criteria')
     name = models.CharField(max_length=200)
 
     class Meta:
@@ -23,16 +23,16 @@ class Criterion(TimeStampedModel):
 
 class Weight(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    criterion = models.ForeignKey('criterion')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='weights')
+    criterion = models.ForeignKey('criterion', related_name='weights')
     value = models.SmallIntegerField()
 
 
 class Score(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    criterion = models.ForeignKey('criterion')
-    option = models.ForeignKey('option')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='scores')
+    criterion = models.ForeignKey('criterion', related_name='scores')
+    option = models.ForeignKey('option', related_name='scores')
     value = models.SmallIntegerField()
 
 

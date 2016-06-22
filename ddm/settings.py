@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'ddm.core',
     'ddm.options',
     'ddm.criteria',
+    'ddm.categories',
 ]
 
 MIDDLEWARE = [
