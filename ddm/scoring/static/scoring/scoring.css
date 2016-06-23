@@ -1,0 +1,18 @@
+.status .ok {
+    color: #37c24b;
+}
+
+
+.status .error {
+    color: #c22037;
+}
+
+
+#scoring-list td.value input {
+    width: 50px;
+}
+
+#scoring-list td.value .status {
+    display: inline-block;
+    width: 20px;
+}

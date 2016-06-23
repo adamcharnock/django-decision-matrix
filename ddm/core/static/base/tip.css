@@ -1,0 +1,4 @@
+[data-toggle="tooltip"] {
+    cursor: help;
+    border-bottom: 1px dotted #000;
+}

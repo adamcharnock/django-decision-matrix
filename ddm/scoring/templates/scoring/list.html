@@ -4,40 +4,39 @@
 {% block extrahead %}
     {{ block.super }}
 
-    <link rel="stylesheet" href="{% static 'weighting/weighting.css' %}">
+    <link rel="stylesheet" href="{% static 'scoring/scoring.css' %}">
 {% endblock %}
 
 {% block extrafoot %}
     {{ block.super }}
-    <script type="application/javascript" src="{% static 'weighting/autosave.js' %}"></script>
+    <script type="application/javascript" src="{% static 'scoring/autosave.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<h2>Criteria Weighting</h2>
 
-<p class="alert alert-info">
-    Here you can set the importance of each criteria. Normally this is done on a scale of 0 - 3,
-    with 3 being the most important.
-</p>
+<h2>Scoring {{ option.name }}</h2>
 
-<table class="table table-hover" id="weighting-list">
+<p>
+    Enter your scores for <strong>{{ option.name }}</strong>. These scores are personal to you.</p>
+
+<table class="table table-hover" id="scoring-list">
     <thead>
         <tr>
             <th>Name</th>
             <th>Category</th>
-            <th>Weight</th>
+            <th>Score</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for criterion, weight in criterion_weights %}
+        {% for criterion, score in criterion_scores %}
         <tr>
             <td>{{ criterion.name }}</td>
             <td>{{ criterion.category }}</td>
             <td class="value">
-                <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
+                <form action="{% url 'scoring:update' option.uuid criterion.uuid %}" method="post">
                     {% csrf_token %}
-                    <input type="number" name="value" value="{{ weight.value }}" >
+                    <input type="number" name="value" value="{{ score.value }}" >
                     <span class="status"></span>
                 </form>
             </td>

@@ -1,17 +1,18 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion
+from ddm.core.models import Criterion, Category
 
 
-class ListView(generic.ListView):
+class ListView(LoginRequiredMixin, generic.ListView):
     template_name = 'criteria/list.html'
-    model = Criterion
-    context_object_name = 'criteria'
+    model = Category
+    context_object_name = 'categories'
 
 
-class CreateView(generic.CreateView):
+class CreateView(LoginRequiredMixin, generic.CreateView):
     fields = ['category', 'name']
     template_name = 'criteria/create.html'
     model = Criterion
@@ -20,7 +21,7 @@ class CreateView(generic.CreateView):
         return reverse('criteria:list')
 
 
-class UpdateView(generic.UpdateView):
+class UpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = ['category', 'name']
     template_name = 'criteria/update.html'
     model = Criterion
@@ -31,7 +32,7 @@ class UpdateView(generic.UpdateView):
         return reverse('criteria:list')
 
 
-class DeleteView(generic.DeleteView):
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Criterion
     slug_field = 'uuid'
     slug_url_kwarg = 'uuid'

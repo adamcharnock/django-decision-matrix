@@ -2,10 +2,13 @@
 {% load bootstrap3 %}
 
 {% block content %}
-Are you sure?
+<h2>Confirmation deletion: {{ category }}</h2>
+
+<p>Are you sure wish to delete this category? There is no undoing this action</p>
+
 <form action="{% url 'categories:delete' category.uuid %}" method="post">
     {% csrf_token %}
     {{form}}
-    <button>Delete</button>
+    <button class="btn btn-danger">Delete Category</button>
 </form>
 {% endblock %}

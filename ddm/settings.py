@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import dj_database_url
+import os
 from path import Path
 
 BASE_DIR = Path(__file__).dirname().parent
@@ -18,10 +19,10 @@ BASE_DIR = Path(__file__).dirname().parent
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'onfur#ar^zft)%zr*3fec-lgrv##vf4uv^zuz!2un!%!(r240u'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG'))
 
 ALLOWED_HOSTS = []
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'ddm.criteria',
     'ddm.categories',
     'ddm.weighting',
+    'ddm.scoring',
 ]
 
 MIDDLEWARE = [

@@ -2,6 +2,8 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<h2>Create Criteria Category</h2>
+
 <form action="{% url 'categories:create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}

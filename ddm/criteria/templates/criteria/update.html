@@ -2,6 +2,8 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<h2>Updating Criterion: {{ criterion }}</h2>
+
 <form action="{% url 'criteria:update' criterion.uuid %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}

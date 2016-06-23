@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^criteria/', include('ddm.criteria.urls', namespace='criteria')),
     url(r'^categories/', include('ddm.categories.urls', namespace='categories')),
     url(r'^weighting/', include('ddm.weighting.urls', namespace='weighting')),
+    url(r'^scoring/', include('ddm.scoring.urls', namespace='scoring')),
 ]

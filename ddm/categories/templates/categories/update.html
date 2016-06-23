@@ -2,6 +2,8 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<h2>Update Criteria Category: {{ category }}</h2>
+
 <form action="{% url 'categories:update' category.uuid %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}

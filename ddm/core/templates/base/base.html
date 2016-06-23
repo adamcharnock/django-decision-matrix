@@ -12,6 +12,7 @@
 
         {% bootstrap_css %}
         <link rel="stylesheet" href="{% static 'base/sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'base/tip.css' %}">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
         {% block extrahead %}{% endblock %}
@@ -24,7 +25,8 @@
 
         {% block body %}{% endblock %}
 
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script type="application/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script type="application/javascript" src="{% static 'base/tip.js' %}"></script>
         {% bootstrap_javascript %}
         {% block extrafoot %}{% endblock %}
     </body>

@@ -1,0 +1,47 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 ddm %}
+
+{% block content %}
+    <h2>{{ option.name }}</h2>
+
+    <form action="" method="get" class="col-md-2">
+        {%  bootstrap_form user_form layout='inline' %}
+        <button class="btn btn-primary">Submit</button>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Weight</th>
+                <th>Score</th>
+                <th>Fitness</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% get_weight_lookup for_user as weight_lookup %}
+            {% get_score_lookup option for_user as score_lookup %}
+            {% get_fitness_lookup option for_user as fitness_lookup %}
+
+            {% for category in categories %}
+                <tr>
+                    <th colspan="4">{{ category.name }}</th>
+                </tr>
+                {% for criterion in category.criteria.all %}
+                    <tr>
+                        <td>{{ criterion.name }}</td>
+                        <td>{{ weight_lookup|get:criterion }}</td>
+                        <td>{{ score_lookup|get:criterion }}</td>
+                        <td>{{ fitness_lookup|get:criterion }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td>{% get_category_weight category for_user %}</td>
+                    <td>{% get_category_score category option for_user %}</td>
+                    <td>{% get_category_fitness category option for_user %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
