@@ -8,6 +8,9 @@ class Option(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
     name = models.CharField(max_length=200)
 
+    class Meta:
+        ordering = ['name']
+
 
 class Criterion(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
@@ -16,6 +19,7 @@ class Criterion(TimeStampedModel):
 
     class Meta:
         verbose_name_plural = 'criteria'
+        ordering = ['category__name', 'name']
 
     def __str__(self):
         return self.name or 'Unnamed Criterion'
@@ -42,6 +46,7 @@ class Category(TimeStampedModel):
 
     class Meta:
         verbose_name_plural = 'categories'
+        ordering = ['name']
 
     def __str__(self):
         return self.name or 'Unnamed Category'

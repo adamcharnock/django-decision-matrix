@@ -1,9 +1,19 @@
 {% extends 'base/layout.html' %}
-{% load bootstrap3 %}
+{% load bootstrap3 static %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    <link rel="stylesheet" href="{% static 'weighting/weighting.css' %}">
+{% endblock %}
+
+{% block extrafoot %}
+    {{ block.super }}
+    <script type="application/javascript" src="{% static 'weighting/autosave.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-
-<table class="table table-hover">
+<table class="table table-hover" id="weighting-list">
     <thead>
         <tr>
             <th>Name</th>
@@ -17,7 +27,13 @@
         <tr>
             <td>{{ criterion.name }}</td>
             <td>{{ criterion.category }}</td>
-            <td>{{ weight.value }}</td>
+            <td class="value">
+                <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="value" value="{{ weight.value }}" >
+                    <span class="status"></span>
+                </form>
+            </td>
         </tr>
         {% empty %}
         <tr>

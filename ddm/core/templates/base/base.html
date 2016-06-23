@@ -13,6 +13,8 @@
         {% bootstrap_css %}
         <link rel="stylesheet" href="{% static 'base/sidebar.css' %}">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+        {% block extrahead %}{% endblock %}
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -24,5 +26,6 @@
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         {% bootstrap_javascript %}
+        {% block extrafoot %}{% endblock %}
     </body>
 </html>
