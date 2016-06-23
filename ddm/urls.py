@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     url(r'^categories/', include('ddm.categories.urls', namespace='categories')),
     url(r'^weighting/', include('ddm.weighting.urls', namespace='weighting')),
     url(r'^scoring/', include('ddm.scoring.urls', namespace='scoring')),
+    url(r'^$', RedirectView.as_view(pattern_name='options:list'))
 ]
