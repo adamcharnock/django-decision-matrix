@@ -22,5 +22,6 @@ setup(
         'django-extensions',
         'django-smalluuid>=0.1.2',
         'django-bootstrap3>=7.0.1',
+        'dj_database_url',
     ],
 )

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
+import dj_database_url
 from path import Path
 
 BASE_DIR = Path(__file__).dirname().parent
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'ddm.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config() or {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
