@@ -24,5 +24,6 @@ setup(
         'django-bootstrap3>=7.0.1',
         'dj_database_url',
         'gunicorn',
+        'psycopg2',
     ],
 )
