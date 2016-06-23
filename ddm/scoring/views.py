@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion, Option, Score
+from ddm.core.models import Criterion, Option, Score, Category
 
 
 def get_score(criterion, option, user):
@@ -24,8 +24,8 @@ def get_score(criterion, option, user):
 
 class ListView(LoginRequiredMixin, generic.ListView):
     template_name = 'scoring/list.html'
-    model = Criterion
-    context_object_name = 'criterion_scores'
+    model = Category
+    context_object_name = 'category_weights'
 
     def get(self, request, *args, **kwargs):
         self.option = get_object_or_404(Option, uuid=self.kwargs['option_uuid'])
@@ -34,11 +34,13 @@ class ListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         # Querset will be a list of tuples in the form (Criterion, Score)
         queryset = []
-        criteria = Criterion.objects.all()
-        for criterion in criteria:
-            queryset.append(
-                (criterion, get_score(criterion, self.option, self.request.user))
-            )
+        for category in super(ListView, self).get_queryset():
+            subQueryset = []
+            for criterion in category.criteria.all():
+                subQueryset.append(
+                    (criterion, get_score(criterion, self.option, self.request.user))
+                )
+            queryset.append((category, subQueryset))
         return queryset
 
     def get_context_data(self, **kwargs):

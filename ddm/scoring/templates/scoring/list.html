@@ -16,34 +16,42 @@
 
 <h2>Scoring {{ option.name }}</h2>
 
-<p>
-    Enter your scores for <strong>{{ option.name }}</strong>. These scores are personal to you.</p>
+<p class="alert alert-info">
+    Enter your scores for <strong>{{ option.name }}</strong>. These scores are personal to you.
+</p>
 
 <table class="table table-hover" id="scoring-list">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Category</th>
             <th>Score</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for criterion, score in criterion_scores %}
-        <tr>
-            <td>{{ criterion.name }}</td>
-            <td>{{ criterion.category }}</td>
-            <td class="value">
-                <form action="{% url 'scoring:update' option.uuid criterion.uuid %}" method="post">
-                    {% csrf_token %}
-                    <input type="number" name="value" value="{{ score.value }}" >
-                    <span class="status"></span>
-                </form>
-            </td>
-        </tr>
+        {% for category, criterion_weights in category_weights %}
+            <tr>
+                <th colspan="3">{{ category.name }}</th>
+            </tr>
+            {% for criterion, weight in criterion_weights %}
+            <tr>
+                <td>{{ criterion.name }}</td>
+                <td class="value">
+                    <form action="{% url 'scoring:update' option.uuid criterion.uuid %}" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="value" value="{{ score.value }}" >
+                        <span class="status"></span>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+            <td colspan="3">No criteria</td>
+            </tr>
+            {% endfor %}
         {% empty %}
         <tr>
-        <td colspan="4">No criteria</td>
+        <td colspan="3">No categories</td>
         </tr>
         {% endfor %}
     </tbody>

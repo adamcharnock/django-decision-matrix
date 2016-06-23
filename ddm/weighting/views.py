@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion, Weight
+from ddm.core.models import Criterion, Weight, Category
 
 
 def get_weight(criterion, user):
@@ -23,16 +23,18 @@ def get_weight(criterion, user):
 
 class ListView(LoginRequiredMixin, generic.ListView):
     template_name = 'weighting/list.html'
-    model = Criterion
-    context_object_name = 'criterion_weights'
+    model = Category
+    context_object_name = 'category_weights'
 
     def get_queryset(self):
         queryset = []
-        criteria = super(ListView, self).get_queryset()
-        for criterion in criteria:
-            queryset.append(
-                (criterion, get_weight(criterion, self.request.user))
-            )
+        for category in super(ListView, self).get_queryset():
+            subQueryset = []
+            for criterion in category.criteria.all():
+                subQueryset.append(
+                    (criterion, get_weight(criterion, self.request.user))
+                )
+            queryset.append((category, subQueryset))
         return queryset
 
 

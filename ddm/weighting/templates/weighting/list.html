@@ -15,36 +15,45 @@
 {% block content %}
 <h2>Criteria Weighting</h2>
 
-<p class="alert alert-info">
-    Here you can set the importance of each criteria. Normally this is done on a scale of 0 - 3,
-    with 3 being the most important.
-</p>
+<div class="alert alert-info">
+    <p>Here you can set the importance of each criteria. Normally this is done on a scale of 0 - 3,
+    with 3 being the most important.</p>
+
+    <p><strong>You only need to do this once</strong>, but you can come back at modify it at any time.</p>
+</div>
 
 <table class="table table-hover" id="weighting-list">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Category</th>
             <th>Weight</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for criterion, weight in criterion_weights %}
-        <tr>
-            <td>{{ criterion.name }}</td>
-            <td>{{ criterion.category }}</td>
-            <td class="value">
-                <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
-                    {% csrf_token %}
-                    <input type="number" name="value" value="{{ weight.value }}" >
-                    <span class="status"></span>
-                </form>
-            </td>
-        </tr>
+        {% for category, criterion_weights in category_weights %}
+            <tr>
+                <th colspan="3">{{ category.name }}</th>
+            </tr>
+            {% for criterion, weight in criterion_weights %}
+            <tr>
+                <td>{{ criterion.name }}</td>
+                <td class="value">
+                    <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="value" value="{{ weight.value }}" >
+                        <span class="status"></span>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+            <td colspan="3">No criteria</td>
+            </tr>
+            {% endfor %}
         {% empty %}
         <tr>
-        <td colspan="4">No criteria</td>
+        <td colspan="3">No categories</td>
         </tr>
         {% endfor %}
     </tbody>
