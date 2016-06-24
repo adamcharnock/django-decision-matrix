@@ -1,5 +1,5 @@
 {% extends 'base/layout.html' %}
-{% load bootstrap3 static ddm %}
+{% load bootstrap3 static ddm ddm_nav %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -7,86 +7,109 @@
 {% endblock %}
 
 {% block content %}
-<h2><i class="fa fa-cubes"></i> Options</h2>
+    <h2><i class="fa fa-cubes"></i> Options</h2>
 
-    <div class="alert alert-info">
-        <p>These are the options to be considered. Click the 'score' button to
-        score the suitability of the option against the various criteria.</p>
+    <div class="row options-notices">
 
-        <p><strong>You should aim to get each properties' completion to 100%</strong></p>
+        <div class="col-sm-6">
+            <div class="alert alert-info">
+                <p>These are the options to be considered. Click the 'score' button to
+                score the suitability of the option against the various criteria.</p>
+
+                <p><strong>You should aim to get each properties' completion to 100%</strong></p>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            {% get_total_incomplete_options as total_incomplete_options %}
+            {% if total_incomplete_options %}
+                <div class="alert alert-warning">
+                    <p><strong>{{ total_incomplete_options }} incomplete option{{ total_incomplete_options|pluralize }}</strong></p>
+                    <p>
+                        You have {{ total_incomplete_options }} incomplete option{{ total_incomplete_options|pluralize }}
+                        which need scoring. Click the highlighted 'score' buttons below to begin.
+                    </p>
+                </div>
+            {% else %}
+                <div class="alert alert-success">
+                    <p><strong>You have now scored all the options!</strong></p>
+                    <p>Click on each option below to see details.</p>
+                </div>
+            {% endif %}
+        </div>
+
     </div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Scores completion</th>
-            <th>Completed by</th>
-            <th>Fitness (you)</th>
-            <th>Fitness (others)</th>
-            <th>Fitness (average)</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for option in options %}
-            {% get_user_fitness option as user_fitness %}
-            {% get_everyone_else_fitness option as everyone_else_fitness %}
-            {% get_fitness option as fitness %}
-
+    <table class="table table-hover sortable-theme-bootstrap" data-sortable>
+        <thead>
             <tr>
-                <td>
-                    <a href="{% url 'options:detail' option.uuid %}">{{ option.name }}</a>
-                </td>
-                <td>
+                <th>Name</th>
+                <th>Scores completion</th>
+                <th>Completed by</th>
+                <th>Fitness (you)</th>
+                <th>Fitness (others)</th>
+                <th>Fitness (average)</th>
+                <th data-sortable="false"></th>
+                <th data-sortable="false"></th>
+                <th data-sortable="false"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for option in options %}
+                {% get_user_fitness option as user_fitness %}
+                {% get_everyone_else_fitness option as everyone_else_fitness %}
+                {% get_fitness option as fitness %}
+
+                <tr>
+                    <td data-value="{{ option.name }}">
+                        <a href="{% url 'options:detail' option.uuid %}">{{ option.name }}</a>
+                    </td>
                     {% get_user_scores option as user_scores %}
                     {% widthratio user_scores.count total_criteria 100 as pc %}
-                    {% if pc == "100" %}
-                        <span class="complete">{{ pc }}%</span>
-                    {% else %}
-                        <span class="incomplete">{{ pc }}%</span>
-                    {% endif %}
-                </td>
-                <td>
-                {% with option.get_completed_users as users %}
-                    <span data-toggle="tooltip" title="{% for u in users %}{{ u }}, {% endfor %}">
-                        {{ users|length }} user{{ users|length|pluralize }}
-                    </span>
+                    <td data-value="{{ pc }}">
+                        {% if pc == "100" %}
+                            <span class="complete">{{ pc }}%</span>
+                        {% else %}
+                            <span class="incomplete">{{ pc }}%</span>
+                        {% endif %}
+                    </td>
+                    {% with option.get_completed_users as users %}
+                    <td data-value="{{ users|length }}">
+                        <span data-toggle="tooltip" title="{% for u in users %}{{ u }}, {% endfor %}">
+                            {{ users|length }} user{{ users|length|pluralize }}
+                        </span>
+                    </td>
                     {% endwith %}
-                </td>
 
-                {% if pc == "100" %}
-                    <td>{{ user_fitness|show_average }}</td>
-                    <td>{{ everyone_else_fitness|show_average }}</td>
-                    <td>{{ fitness|show_average }}</td>
-                {% else %}
-                    <td class="pending">-</td>
-                    <td class="pending">-</td>
-                    <td class="pending">-</td>
-                {% endif %}
+                    {% if pc == "100" %}
+                        <td>{{ user_fitness|show_average }}</td>
+                        <td>{{ everyone_else_fitness|show_average }}</td>
+                        <td>{{ fitness|show_average }}</td>
+                    {% else %}
+                        <td class="pending">-</td>
+                        <td class="pending">-</td>
+                        <td class="pending">-</td>
+                    {% endif %}
 
-                <td>
-                    <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc == "100" %}btn-default{% else %}btn-primary{% endif %} btn-xs">Score</a>
-                </td>
-                <td>
-                    <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
-                </td>
-                <td>
-                    <form action="{% url 'options:delete' option.uuid %}" method="get">
-                        <button class="btn btn-danger btn-xs">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-            <td colspan="3">No options</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    <td>
+                        <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc == "100" %}btn-default{% else %}btn-primary{% endif %} btn-xs">Score</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
+                    </td>
+                    <td>
+                        <form action="{% url 'options:delete' option.uuid %}" method="get">
+                            <button class="btn btn-danger btn-xs">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                <td colspan="3">No options</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-
-<a href="{% url 'options:create' %}" class="btn btn-primary">Create</a>
+    <a href="{% url 'options:create' %}" class="btn btn-primary">Create</a>
 {% endblock %}

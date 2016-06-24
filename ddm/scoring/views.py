@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.views import generic
 
 from ddm.core.models import Criterion, Option, Score, Category

@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{% static 'base/sidebar.css' %}">
         <link rel="stylesheet" href="{% static 'base/tip.css' %}">
         <link rel="stylesheet" href="{% static 'base/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'ddm_libs/sortable/sortable-theme-bootstrap.css' %}">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
         {% block extrahead %}{% endblock %}
@@ -29,6 +30,7 @@
         <script type="application/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script type="application/javascript" src="{% static 'base/tip.js' %}"></script>
         <script type="application/javascript" src="{% static 'base/sidebar.js' %}"></script>
+        <script type="application/javascript" src="{% static 'ddm_libs/sortable/sortable.min.js' %}"></script>
         {% bootstrap_javascript %}
         {% block extrafoot %}{% endblock %}
     </body>

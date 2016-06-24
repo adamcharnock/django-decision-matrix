@@ -1,10 +1,23 @@
+{% load ddm_nav %}
 <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
     <ul class="nav" id="menu">
-        <li><a href="{% url 'options:list' %}"><i class="fa fa-cubes"></i> <span class="collapse in hidden-xs">Options</span></a></li>
-        <li><a href="{% url 'criteria:list' %}"><i class="fa fa-check-square-o"></i> <span class="collapse in hidden-xs">Criteria</span></a></li>
-        <li><a href="{% url 'weighting:home' %}"><i class="fa fa-balance-scale"></i> <span class="collapse in hidden-xs">Criteria Weighting</span></a></li>
-        <hr>
-        <li><a href="{% url 'categories:list' %}"><i class="fa fa-object-group"></i> <span class="collapse in hidden-xs">Criteria Categories</span></a></li>
+        {% get_total_incomplete_options as total_incomplete_options %}
+        {% get_total_weightings_missing as total_weightings_missing %}
+
+        {% if total_incomplete_options %}
+            {% include 'base/sidebar_url.html' with url='options:list' name='Options' icon='cubes' count=total_incomplete_options count_style="warning" %}
+        {% else %}
+            {% include 'base/sidebar_url.html' with url='options:list' name='Options' icon='cubes' %}
+        {% endif %}
+
+        {% if total_weightings_missing %}
+            {% include 'base/sidebar_url.html' with url='weighting:home' name='Criteria Weighting' icon='balance-scale' count=total_weightings_missing count_style="danger" %}
+        {% else %}
+            {% include 'base/sidebar_url.html' with url='weighting:home' name='Criteria Weighting' icon='balance-scale' %}
+        {% endif %}
+
+        {% include 'base/sidebar_url.html' with url='criteria:list' name='Criteria' icon='check-square-o' %}
+        {% include 'base/sidebar_url.html' with url='categories:list' name='Criteria Categories' icon='object-group' badge_count=12 %}
 
         {% comment %}
         <li><a href="#"><i class="fa fa-list"></i> <span class="collapse in hidden-xs">Stories</span></a></li>

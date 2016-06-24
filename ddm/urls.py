@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 
+from ddm import settings
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^options/', include('ddm.options.urls', namespace='options')),
@@ -26,3 +28,12 @@ urlpatterns = [
     url(r'^scoring/', include('ddm.scoring.urls', namespace='scoring')),
     url(r'^$', RedirectView.as_view(pattern_name='options:list'))
 ]
+#
+# if settings.DEBUG:
+#     try:
+#         import debug_toolbar
+#         urlpatterns += [
+#             url(r'^__debug__/', include(debug_toolbar.urls)),
+#         ]
+#     except ImportError:
+#         pass

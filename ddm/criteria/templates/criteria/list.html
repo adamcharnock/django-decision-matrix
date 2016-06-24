@@ -2,40 +2,40 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<h2><i class="fa fa-check-square-o"></i> Criteria</h2>
+    <h2><i class="fa fa-check-square-o"></i> Criteria</h2>
 
-<p class="alert alert-info">
-    Criteria define the ways in which you will assess your options. Criteria are grouped into
-    categories to help with organisation and reporting
-</p>
+    <p class="alert alert-info">
+        Criteria define the ways in which you will assess your options. Criteria are grouped into
+        categories to help with organisation and reporting
+    </p>
 
-<table class="table table-hover">
-    <tbody>
-        {% for category in categories %}
-            <tr>
-                <th colspan="4">{{ category.name }}</th>
-            </tr>
-            {% for criterion in category.criteria.all %}
-            <tr>
-                <td>{{ criterion.name }}</td>
-                <td>
-                    <a href="{% url 'criteria:update' criterion.uuid %}" class="btn btn-default btn-xs">Edit</a>
-                </td>
-                <td>
-                    <form action="{% url 'criteria:delete' criterion.uuid %}" method="get">
-                        <button class="btn btn-danger btn-xs">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-            <td colspan="4">No criteria in this category</td>
-            </tr>
+    <table class="table table-hover">
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <th colspan="4">{{ category.name }}</th>
+                </tr>
+                {% for criterion in category.criteria.all %}
+                <tr>
+                    <td>{{ criterion.name }}</td>
+                    <td>
+                        <a href="{% url 'criteria:update' criterion.uuid %}" class="btn btn-default btn-xs">Edit</a>
+                    </td>
+                    <td>
+                        <form action="{% url 'criteria:delete' criterion.uuid %}" method="get">
+                            <button class="btn btn-danger btn-xs">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                <td colspan="4">No criteria in this category</td>
+                </tr>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
 
-<a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
+    <a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
 {% endblock %}

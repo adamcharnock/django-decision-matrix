@@ -1,0 +1,11 @@
+<li>
+    <a href="{% url url %}">
+        <i class="fa fa-{{ icon }}"></i>
+        <span class="collapse in hidden-xs">
+            {{ name }}
+            {% if count %}
+                <span class="label label-{% firstof count_style 'default' %} pull-right">{{ count }}</span>
+            {% endif %}
+        </span>
+    </a>
+</li>

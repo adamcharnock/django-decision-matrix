@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'ddm.scoring',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -122,11 +122,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+try:
+    import debug_toolbar
+    INSTALLED_APPS.append('debug_toolbar')
+    # DEBUG_TOOLBAR_PATCH_SETTINGS = False
+    # MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+except ImportError:
+    pass
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Begin DDM config
 
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     'ddm.core.context_processors.score_weight_bounds',
@@ -137,3 +146,4 @@ DDM_SCORE_MAX = 5
 
 DDM_WEIGHT_MIN = 0
 DDM_WEIGHT_MAX = 5
+

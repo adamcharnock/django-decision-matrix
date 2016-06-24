@@ -18,7 +18,7 @@ setup(
     long_description=open('README.rst').read() if exists("README.rst") else "",
     install_requires=[
         'path.py',
-        'django>=1.10b1',
+        'django>=1.9',
         'django-extensions',
         'django-smalluuid>=0.1.2',
         'django-bootstrap3>=7.0.1',

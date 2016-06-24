@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from django.urls import reverse
 from django.views import generic
 
 from ddm.core.models import Option, Criterion, Category

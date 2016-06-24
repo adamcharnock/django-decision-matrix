@@ -12,6 +12,16 @@ def get_total_weight(*a, **kw):
     return res['value__sum']
 
 
+def get_total_complete_options(user):
+    total_criteria = Criterion.objects.count()
+    res = Score.objects.filter(user=user).\
+        values('option').\
+        annotate(total_scores=Count('option')).\
+        order_by()
+
+    complete_option_ids = [r['option'] for r in res if r['total_scores'] == total_criteria]
+    return len(complete_option_ids)
+
 class Option(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
     name = models.CharField(max_length=200)
@@ -87,6 +97,11 @@ class Score(TimeStampedModel):
     criterion = models.ForeignKey('criterion', related_name='scores')
     option = models.ForeignKey('option', related_name='scores')
     value = models.IntegerField()
+
+    class Meta:
+        unique_together = (
+            ('user', 'option', 'criterion'),
+        )
 
 
 class Category(TimeStampedModel):

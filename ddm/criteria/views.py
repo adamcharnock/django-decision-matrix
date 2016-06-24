@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.views import generic
 
 from ddm.core.models import Criterion, Category
