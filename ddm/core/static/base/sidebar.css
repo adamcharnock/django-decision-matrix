@@ -40,6 +40,11 @@ html, body {
     left: 0;
 }
 
+/*Added by Adam*/
+.row-offcanvas.active #sidebar .collapse.in  {
+    display: inline!important;
+}
+
 /*
  * off canvas sidebar
  * --------------------------------------------------
