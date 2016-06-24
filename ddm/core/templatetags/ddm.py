@@ -1,4 +1,5 @@
 from django import template
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 
 from ddm.core.models import Score, Criterion
@@ -57,21 +58,21 @@ def get_user_scores(context, option):
 
 
 @register.assignment_tag()
-def get_fitness(option):
+def get_fitness(option, user=None):
     # Get the overall average fitness for the given open for all users
-    return option.get_fitness()
+    return option.get_fitness_for_user(user) if user else option.get_fitness()
 
 
 @register.assignment_tag(takes_context=True)
 def get_everyone_else_fitness(context, option):
     # Get the overall average fitness for the given open for all users except the current
-    return option.get_fitness(~Q(user=context['request'].user))
+    return option.get_fitness(get_user_model().objects.filter(~Q(pk=context['request'].user.pk)))
 
 
 @register.assignment_tag(takes_context=True)
 def get_user_fitness(context, option):
     # Get the overall average fitness for the given open for the current user only
-    return option.get_fitness(user=context['request'].user)
+    return option.get_fitness_for_user(context['request'].user)
 
 
 @register.assignment_tag()
@@ -98,14 +99,12 @@ def get_score_lookup(option, user=None):
 @register.assignment_tag()
 def get_fitness_lookup(option, user=None):
     # Get a dictionary of criterion to score values
-    kw = remove_none_values(user=user)
     return {
-        c: c.get_fitness(option, **kw)
+        c: c.get_fitness_for_user(option, user) if user else c.get_fitness(option)
         for c
         in Criterion.objects.all()
     }
 
 @register.assignment_tag()
 def get_category_fitness(category, option, user=None):
-    kw = remove_none_values(user=user)
-    return category.get_normalised_fitness(option, **kw)
+    return category.get_total_fitness_for_user(option, user) if user else category.get_total_fitness(option)

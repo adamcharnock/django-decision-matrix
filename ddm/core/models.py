@@ -6,11 +6,6 @@ from django_extensions.db.models import TimeStampedModel
 from django_smalluuid.models import SmallUUIDField, uuid_default
 
 
-def get_total_weight(*a, **kw):
-    # Could be on the Weight manager
-    return sum(criterion.get_average_weight() for criterion in Criterion.objects.all())
-
-
 def get_total_complete_options(user):
     total_criteria = Criterion.objects.count()
     res = Score.objects.filter(user=user).\
@@ -28,17 +23,15 @@ class Option(TimeStampedModel):
     class Meta:
         ordering = ['name']
 
-    def get_fitness(self, *a, **kw):
-        """ Get the fitness (weight * score) for this option
+    def get_fitness_for_user(self, user):
+        return self.get_fitness(get_user_model().objects.filter(pk=user.pk))
 
-        Filtering arguments can be passed in as *a and **kw to narrow down the
-        wieghts and scores selected (i.e. by user)
-        """
-        fitnesses = [c.get_fitness(self, *a, **kw) for c in Criterion.objects.all()]
+    def get_fitness(self, user_queryset=None):
+        fitnesses = [c.get_fitness(self, user_queryset) for c in Criterion.objects.all()]
         # Some criterion may not have been scored, in which case ignore them
         fitnesses = list(filter(lambda f: f is not None, fitnesses))
         if fitnesses:
-            return sum(fitnesses) / get_total_weight(*a, **kw)
+            return sum(fitnesses)
         else:
             return None
 
@@ -73,13 +66,28 @@ class Criterion(TimeStampedModel):
         res = self.scores.filter(option=option, *a, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
-    def get_fitness(self, option, *a, **kw):
-        weight = self.get_average_weight(*a, **kw)
-        score = self.get_average_score(option, *a, **kw)
+    def get_fitness_for_user(self, option, user):
+        weight = self.get_average_weight(user=user)
+        score = self.get_average_score(option, user=user)
         if weight is None or score is None:
             return None
         else:
             return weight * score
+
+    def get_fitness(self, option, user_queryset=None):
+        fitnesses = []
+        if user_queryset is None:
+            user_queryset = get_user_model().objects.all()
+
+        for user in user_queryset:
+            fitnesses.append(self.get_fitness_for_user(option, user))
+
+        fitnesses = [f for f in fitnesses if f is not None]
+
+        if not fitnesses:
+            return None
+        else:
+            return sum(fitnesses) / len(fitnesses)
 
 
 class Weight(TimeStampedModel):
@@ -130,16 +138,24 @@ class Category(TimeStampedModel):
         res = Score.objects.filter(criterion__category=self, option=option, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
-    def get_total_fitness(self, option, *a, **kw):
+    def get_total_fitness(self, option):
         total = None
         for criterion in self.criteria.all():
-            weight = criterion.get_average_weight(*a, **kw)
-            score = criterion.get_average_score(option, *a, **kw)
-
-            if weight is not None and score is not None:
+            fitness = criterion.get_fitness(option)
+            if fitness is not None:
                 if total is None:
                     total = 0
-                total += weight * score
+                total += fitness
+        return total
+
+    def get_total_fitness_for_user(self, option, user):
+        total = None
+        for criterion in self.criteria.all():
+            fitness = criterion.get_fitness_for_user(option, user)
+            if fitness is not None:
+                if total is None:
+                    total = 0
+                total += fitness
         return total
 
     def get_normalised_fitness(self, option, *a, **kw):
@@ -148,4 +164,5 @@ class Category(TimeStampedModel):
         if total_fitness is None or total_weight is None:
             return None
         else:
+            import pdb; pdb.set_trace()
             return total_fitness / total_weight

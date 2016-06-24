@@ -9,6 +9,7 @@
 {% block content %}
     <h2><i class="fa fa-cubes"></i> {{ option.name }}</h2>
 
+    {% get_fitness option for_user %}
 
     <div class="row">
         <div class="col col-sm-6">
