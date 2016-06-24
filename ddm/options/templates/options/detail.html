@@ -9,16 +9,24 @@
 {% block content %}
     <h2><i class="fa fa-cubes"></i> {{ option.name }}</h2>
 
-    {% get_fitness option for_user %}
-
     <div class="row">
-        <div class="col col-sm-6">
-            <form action="" method="get" class="form-inline">
-                {%  bootstrap_form user_form layout='inline' %}
-                <button class="btn btn-primary">Submit</button>
+        <div class="col col-sm-3">
+            <form action="" method="get" class="form">
+                {% bootstrap_label "Select a user to view or view all users" %}
+                {%  bootstrap_field user_form.user show_label=False %}
+                <button class="btn btn-primary pull-right">Submit</button>
             </form>
         </div>
-        <div class="col col-sm-6">
+
+        <div class="col col-sm-3 col-sm-offset-1">
+            {% get_fitness option for_user as fitness %}
+            <div class="alert alert-info fitness">
+                <span class="value">{{ fitness|show_value }}</span>
+                <span class="lbl">option fitness</span>
+            </div>
+        </div>
+
+        <div class="col col-sm-3 col-sm-offset-1">
             <a href="{% url 'options:list' %}" class="btn btn-primary pull-right"><i class="fa fa-arrow-left"></i> Back to Options</a>
         </div>
     </div>

@@ -16,3 +16,15 @@
     color: #999999;
     font-style: italic;
 }
+
+
+.fitness .value {
+    font-size: 80px;
+    line-height: 80px;
+    display: block;
+}
+
+.fitness .lbl {
+    font-weight: bold;
+    display: block;
+}
