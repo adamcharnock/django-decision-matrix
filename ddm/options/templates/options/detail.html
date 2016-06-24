@@ -1,5 +1,10 @@
 {% extends 'base/layout.html' %}
-{% load bootstrap3 ddm %}
+{% load bootstrap3 static ddm %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'options/detail.css' %}">
+{% endblock %}
 
 {% block content %}
     <h2>{{ option.name }}</h2>
@@ -9,7 +14,7 @@
         <button class="btn btn-primary">Submit</button>
     </form>
 
-    <table class="table table-hover">
+    <table class="table table-hover" id="score-detail">
         <thead>
             <tr>
                 <th></th>
@@ -24,22 +29,36 @@
             {% get_fitness_lookup option for_user as fitness_lookup %}
 
             {% for category in categories %}
-                <tr>
+                {% get_category_fitness category option for_user as fitness %}
+
+                <tr class="category-heading">
                     <th colspan="4">{{ category.name }}</th>
                 </tr>
                 {% for criterion in category.criteria.all %}
-                    <tr>
+                    <tr class="criterion">
                         <td>{{ criterion.name }}</td>
-                        <td>{{ weight_lookup|get:criterion }}</td>
-                        <td>{{ score_lookup|get:criterion }}</td>
-                        <td>{{ fitness_lookup|get:criterion }}</td>
+                        <td class="weight">{{ weight_lookup|get:criterion|show_value }}</td>
+                        <td class="score">{{ score_lookup|get:criterion|show_value }}</td>
+                        <td class="fitness">{{ fitness_lookup|get:criterion|show_value }}</td>
+                    </tr>
+                {% empty %}
+                    <tr class="no-criteria">
+                        <td>No criteria</td>
                     </tr>
                 {% endfor %}
-                <tr>
+                <tr class="summary">
                     <td></td>
-                    <td>{% get_category_weight category for_user %}</td>
-                    <td>{% get_category_score category option for_user %}</td>
-                    <td>{% get_category_fitness category option for_user %}</td>
+                    <td class="weight"></td>
+                    <td class="score"></td>
+                    <td class="fitness">
+                        <span data-toggle="tooltip" title="Normalised fitness, calculated as: total fitness / total weight">
+                            {{ fitness|show_average }}
+                        </span>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr class="no-categories">
+                    <td>No categories</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,18 @@
+#score-detail .category-heading:not(:first-child) th {
+    padding-top: 40px;
+    border-top: none;
+}
+
+#score-detail .summary td {
+    font-weight: bold;
+}
+
+#score-detail .summary td:first-child {
+    text-align: right;
+    padding-right: 20px;
+}
+
+#score-detail .weight, #score-detail .score {
+    color: #999999;
+    font-style: italic;
+}

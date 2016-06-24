@@ -25,7 +25,7 @@ def get_score(criterion, option, user):
 class ListView(LoginRequiredMixin, generic.ListView):
     template_name = 'scoring/list.html'
     model = Category
-    context_object_name = 'category_weights'
+    context_object_name = 'category_scores'
 
     def get(self, request, *args, **kwargs):
         self.option = get_object_or_404(Option, uuid=self.kwargs['option_uuid'])
@@ -51,7 +51,7 @@ class ListView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class WeightForm(forms.ModelForm):
+class ScoreForm(forms.ModelForm):
     value = forms.IntegerField(required=False)
 
     class Meta:
@@ -60,7 +60,7 @@ class WeightForm(forms.ModelForm):
 
     def save(self, commit=True):
         if self.cleaned_data.get('value'):
-            super(WeightForm, self).save()
+            super(ScoreForm, self).save()
         else:
             if self.instance and self.instance.pk:
                 self.instance.delete()
@@ -68,13 +68,13 @@ class WeightForm(forms.ModelForm):
 
 class SetView(LoginRequiredMixin, generic.CreateView):
     model = Score
-    form_class = WeightForm
+    form_class = ScoreForm
 
     def get_form_kwargs(self):
         self.option = get_object_or_404(Option, uuid=self.kwargs.get('option_uuid'))
         self.criterion = get_object_or_404(Criterion, uuid=self.kwargs.get('criterion_uuid'))
         score = get_score(self.criterion, self.option, self.request.user)
-        # If the weight already exists for this user/criterion, then update the
+        # If the score already exists for this user/criterion, then update the
         # instance of it rather than creating a new one
         if score:
             self.object = score

@@ -26,7 +26,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Weight</th>
+            <th>Weight ({{ WEIGHT_MIN }} - {{ WEIGHT_MAX }})</th>
             <th></th>
         </tr>
     </thead>
@@ -41,7 +41,7 @@
                 <td class="value">
                     <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
                         {% csrf_token %}
-                        <input type="number" name="value" value="{{ weight.value }}" >
+                        <input type="number" name="value" value="{{ weight.value }}" min="{{ WEIGHT_MIN }}" max="{{ WEIGHT_MAX }}" >
                         <span class="status"></span>
                     </form>
                 </td>

@@ -56,6 +56,18 @@ Additional:
  * Allow multiple people to score & weight, then offer comparisons.
    * Link each weight to the given user
    * Link each score to the given user
+ * Score modifiers - ability to specify a score, but then an alternate score given a modifier.
+   For example, a 'money modifier' would allow for specifying a score of '0', but also a score of
+   '3' given a modifier of £1,000.
+   * Example use: France has a language score of 0, but that could also be a score of 2
+     with £700 of private langauge tuition.
+ * **OR** - Use modifiers, but allow users to create entire alternative score
+   sets for an option.
+    * Example use: When buying a plot of land, building of a road to the land
+      would improve not just access, but parking and ease of house construction.
+ * What this seems to come down to is saying that "modifier X with value Y will
+   modify one or more scores thusly".
+    * Challenge: Think of a UI for this
 
 Interfaces
 ----------

@@ -32,65 +32,57 @@
     </thead>
     <tbody>
         {% for option in options %}
-        <tr>
-            <td>
-                <a href="{% url 'options:detail' option.uuid %}">{{ option.name }}</a>
-            </td>
-            <td>
-                {% get_user_scores option as user_scores %}
-                {% widthratio user_scores.count total_criteria 100 as pc %}
-                {% if pc == "100" %}
-                    <span class="complete">{{ pc }}%</span>
-                {% else %}
-                    <span class="incomplete">{{ pc }}%</span>
-                {% endif %}
-            </td>
-            <td>
-            {% with option.get_completed_users as users %}
-                <span data-toggle="tooltip" title="{% for u in users %}{{ u }}, {% endfor %}">
-                    {{ users|length }} user{{ users|length|pluralize }}
-                </span>
-                {% endwith %}
-            </td>
-            <td>
-                {% if pc == "100" %}
-                    {% get_user_fitness option %}
-                {% else %}
-                    <span class="pending">-</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if pc == "100" %}
-                    {% get_everyone_else_fitness option %}
-                {% else %}
-                    <span class="pending">-</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if pc == "100" %}
-                    {% get_fitness option %}
-                {% else %}
-                    <span class="pending">-</span>
-                {% endif %}
-            </td>
+            {% get_user_fitness option as user_fitness %}
+            {% get_everyone_else_fitness option as everyone_else_fitness %}
+            {% get_fitness option as fitness %}
 
+            <tr>
+                <td>
+                    <a href="{% url 'options:detail' option.uuid %}">{{ option.name }}</a>
+                </td>
+                <td>
+                    {% get_user_scores option as user_scores %}
+                    {% widthratio user_scores.count total_criteria 100 as pc %}
+                    {% if pc == "100" %}
+                        <span class="complete">{{ pc }}%</span>
+                    {% else %}
+                        <span class="incomplete">{{ pc }}%</span>
+                    {% endif %}
+                </td>
+                <td>
+                {% with option.get_completed_users as users %}
+                    <span data-toggle="tooltip" title="{% for u in users %}{{ u }}, {% endfor %}">
+                        {{ users|length }} user{{ users|length|pluralize }}
+                    </span>
+                    {% endwith %}
+                </td>
 
-            <td>
-                <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc == "100" %}btn-default{% else %}btn-primary{% endif %} btn-xs">Score</a>
-            </td>
-            <td>
-                <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
-            </td>
-            <td>
-                <form action="{% url 'options:delete' option.uuid %}" method="get">
-                    <button class="btn btn-danger btn-xs">Delete</button>
-                </form>
-            </td>
-        </tr>
+                {% if pc == "100" %}
+                    <td>{{ user_fitness|show_average }}</td>
+                    <td>{{ everyone_else_fitness|show_average }}</td>
+                    <td>{{ fitness|show_average }}</td>
+                {% else %}
+                    <td class="pending">-</td>
+                    <td class="pending">-</td>
+                    <td class="pending">-</td>
+                {% endif %}
+
+                <td>
+                    <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc == "100" %}btn-default{% else %}btn-primary{% endif %} btn-xs">Score</a>
+                </td>
+                <td>
+                    <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>
+                </td>
+                <td>
+                    <form action="{% url 'options:delete' option.uuid %}" method="get">
+                        <button class="btn btn-danger btn-xs">Delete</button>
+                    </form>
+                </td>
+            </tr>
         {% empty %}
-        <tr>
-        <td colspan="3">No options</td>
-        </tr>
+            <tr>
+            <td colspan="3">No options</td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>

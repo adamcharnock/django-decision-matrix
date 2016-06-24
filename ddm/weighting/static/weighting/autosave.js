@@ -2,6 +2,13 @@ $(function () {
     var save = function ($form) {
         var url = $form.attr('action');
         var $status = $form.find('.status').empty().show();
+        var $input = $form.find('input[name=value]');
+        $input.val(
+            Math.min(
+                Math.max($input.val(), $input.attr('min')),
+                $input.attr('max')
+            )
+        );
         $.ajax(
             url,
             {

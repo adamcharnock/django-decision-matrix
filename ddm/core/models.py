@@ -1,9 +1,15 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Sum
 from django_extensions.db.models import TimeStampedModel
 from django_smalluuid.models import SmallUUIDField, uuid_default
+
+
+def get_total_weight(*a, **kw):
+    # Could be on the Weight manager
+    res = Weight.objects.filter(*a, **kw).aggregate(Sum('value'))
+    return res['value__sum']
 
 
 class Option(TimeStampedModel):
@@ -24,7 +30,7 @@ class Option(TimeStampedModel):
         fitnesses = list(filter(lambda f: f is not None, fitnesses))
 
         if fitnesses:
-            return sum(fitnesses) / len(fitnesses)
+            return sum(fitnesses) / get_total_weight(*a, **kw)
         else:
             return None
 
@@ -98,14 +104,30 @@ class Category(TimeStampedModel):
         res = Weight.objects.filter(criterion__category=self, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
+    def get_total_weight(self, *a, **kw):
+        res = Weight.objects.filter(criterion__category=self, **kw).aggregate(Sum('value'))
+        return res['value__sum']
+
     def get_average_score(self, option, *a, **kw):
         res = Score.objects.filter(criterion__category=self, option=option, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
-    def get_average_fitness(self, option, *a, **kw):
-        weight = self.get_average_weight(*a, **kw)
-        score = self.get_average_score(option, *a, **kw)
-        if weight is None or score is None:
+    def get_total_fitness(self, option, *a, **kw):
+        total = None
+        for criterion in self.criteria.all():
+            weight = criterion.get_average_weight(*a, **kw)
+            score = criterion.get_average_score(option, *a, **kw)
+
+            if weight is not None and score is not None:
+                if total is None:
+                    total = 0
+                total += weight * score
+        return total
+
+    def get_normalised_fitness(self, option, *a, **kw):
+        total_fitness = self.get_total_fitness(option, *a, **kw)
+        total_weight = self.get_total_weight(*a, **kw)
+        if total_fitness is None or total_weight is None:
             return None
         else:
-            return weight * score
+            return total_fitness / total_weight

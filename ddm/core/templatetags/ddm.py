@@ -5,11 +5,36 @@ from ddm.core.models import Score, Criterion
 
 register = template.Library()
 
-def or_none(value, none):
+@register.filter
+def or_none(value, none='-'):
     if value is None:
         return none
     else:
         return value
+
+
+@register.filter
+def show_value(value, none='-'):
+    if value is None:
+        return none
+    else:
+        try:
+            return int(value)
+        except (ValueError, TypeError):
+            return none
+
+
+@register.filter
+def show_average(value, none='-'):
+    # Like show_value, but also shows a decimal point
+    if value is None:
+        return none
+    else:
+        try:
+            return "{:.1f}".format(value)
+        except (ValueError, TypeError):
+            return none
+
 
 
 def remove_none_values(**kw):
@@ -32,21 +57,21 @@ def get_user_scores(context, option):
 
 
 @register.assignment_tag()
-def get_fitness(option, none='-'):
+def get_fitness(option):
     # Get the overall average fitness for the given open for all users
-    return or_none(option.get_fitness(), none)
+    return option.get_fitness()
 
 
 @register.assignment_tag(takes_context=True)
-def get_everyone_else_fitness(context, option, none='-'):
+def get_everyone_else_fitness(context, option):
     # Get the overall average fitness for the given open for all users except the current
-    return or_none(option.get_fitness(~Q(user=context['request'].user)), none)
+    return option.get_fitness(~Q(user=context['request'].user))
 
 
 @register.assignment_tag(takes_context=True)
-def get_user_fitness(context, option, none='-'):
+def get_user_fitness(context, option):
     # Get the overall average fitness for the given open for the current user only
-    return or_none(option.get_fitness(user=context['request'].user), none)
+    return option.get_fitness(user=context['request'].user)
 
 
 @register.assignment_tag()
@@ -80,20 +105,7 @@ def get_fitness_lookup(option, user=None):
         in Criterion.objects.all()
     }
 
-
-@register.assignment_tag()
-def get_category_weight(category, user=None):
-    kw = remove_none_values(user=user)
-    return category.get_average_weight(**kw)
-
-
-@register.assignment_tag()
-def get_category_score(category, option, user=None):
-    kw = remove_none_values(user=user)
-    return category.get_average_score(option, **kw)
-
-
 @register.assignment_tag()
 def get_category_fitness(category, option, user=None):
     kw = remove_none_values(user=user)
-    return category.get_average_fitness(option, **kw)
+    return category.get_normalised_fitness(option, **kw)

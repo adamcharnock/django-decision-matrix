@@ -127,3 +127,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATES[0]['OPTIONS']['context_processors'] += [
+    'ddm.core.context_processors.score_weight_bounds',
+]
+
+DDM_SCORE_MIN = 0
+DDM_SCORE_MAX = 5
+
+DDM_WEIGHT_MIN = 0
+DDM_WEIGHT_MAX = 5
