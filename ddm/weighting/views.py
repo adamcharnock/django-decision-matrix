@@ -46,7 +46,7 @@ class WeightForm(forms.ModelForm):
         model = Weight
 
     def save(self, commit=True):
-        if self.cleaned_data.get('value'):
+        if self.cleaned_data.get('value') is not None:
             super(WeightForm, self).save()
         else:
             if self.instance and self.instance.pk:

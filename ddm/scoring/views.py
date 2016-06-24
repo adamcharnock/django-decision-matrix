@@ -59,7 +59,7 @@ class ScoreForm(forms.ModelForm):
         model = Score
 
     def save(self, commit=True):
-        if self.cleaned_data.get('value'):
+        if self.cleaned_data.get('value') is not None:
             super(ScoreForm, self).save()
         else:
             if self.instance and self.instance.pk:

@@ -8,8 +8,7 @@ from django_smalluuid.models import SmallUUIDField, uuid_default
 
 def get_total_weight(*a, **kw):
     # Could be on the Weight manager
-    res = Weight.objects.filter(*a, **kw).aggregate(Sum('value'))
-    return res['value__sum']
+    return sum(criterion.get_average_weight() for criterion in Criterion.objects.all())
 
 
 def get_total_complete_options(user):
@@ -38,7 +37,6 @@ class Option(TimeStampedModel):
         fitnesses = [c.get_fitness(self, *a, **kw) for c in Criterion.objects.all()]
         # Some criterion may not have been scored, in which case ignore them
         fitnesses = list(filter(lambda f: f is not None, fitnesses))
-
         if fitnesses:
             return sum(fitnesses) / get_total_weight(*a, **kw)
         else:
@@ -89,6 +87,11 @@ class Weight(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='weights')
     criterion = models.ForeignKey('criterion', related_name='weights')
     value = models.IntegerField()
+
+    class Meta:
+        unique_together = (
+            ('user', 'criterion'),
+        )
 
 
 class Score(TimeStampedModel):

@@ -45,9 +45,9 @@
                 {% for criterion in category.criteria.all %}
                     <tr class="criterion">
                         <td>{{ criterion.name }}</td>
-                        <td class="weight">{{ weight_lookup|get:criterion|show_value }}</td>
-                        <td class="score">{{ score_lookup|get:criterion|show_value }}</td>
-                        <td class="fitness">{{ fitness_lookup|get:criterion|show_value }}</td>
+                        <td class="weight">{{ weight_lookup|get:criterion|show_average }}</td>
+                        <td class="score">{{ score_lookup|get:criterion|show_average }}</td>
+                        <td class="fitness">{{ fitness_lookup|get:criterion|show_average }}</td>
                     </tr>
                 {% empty %}
                     <tr class="no-criteria">
