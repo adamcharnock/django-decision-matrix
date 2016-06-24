@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<h2>Updating Criterion: {{ criterion }}</h2>
+<h2><i class="fa fa-check-square-o"></i> Updating Criterion: {{ criterion }}</h2>
 
 <form action="{% url 'criteria:update' criterion.uuid %}" method="post">
     {% csrf_token %}

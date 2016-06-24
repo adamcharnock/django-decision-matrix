@@ -2,10 +2,13 @@
 {% load bootstrap3 %}
 
 {% block content %}
-Are you sure?
+<h2><i class="fa fa-cubes"></i> Confirm deletion: {{ option }}</h2>
+
+<p>Are you sure wish to delete this option? There is no undoing this action</p>
+
 <form action="{% url 'options:delete' option.uuid %}" method="post">
     {% csrf_token %}
     {{form}}
-    <button>Delete</button>
+    <button class="btn btn-danger">Delete Option</button>
 </form>
 {% endblock %}

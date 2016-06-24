@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<h2>Update Criteria Category: {{ category }}</h2>
+<h2><i class="fa fa-object-group"></i> Update Criteria Category: {{ category }}</h2>
 
 <form action="{% url 'categories:update' category.uuid %}" method="post">
     {% csrf_token %}

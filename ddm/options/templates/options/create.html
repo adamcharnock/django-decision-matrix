@@ -2,6 +2,8 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<h2><i class="fa fa-cubes"></i> Create Option</h2>
+
 <form action="{% url 'options:create' %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
