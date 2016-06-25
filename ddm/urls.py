@@ -26,14 +26,6 @@ urlpatterns = [
     url(r'^categories/', include('ddm.categories.urls', namespace='categories')),
     url(r'^weighting/', include('ddm.weighting.urls', namespace='weighting')),
     url(r'^scoring/', include('ddm.scoring.urls', namespace='scoring')),
+    url(r'^printing/', include('ddm.printing.urls', namespace='printing')),
     url(r'^$', RedirectView.as_view(pattern_name='options:list'))
 ]
-#
-# if settings.DEBUG:
-#     try:
-#         import debug_toolbar
-#         urlpatterns += [
-#             url(r'^__debug__/', include(debug_toolbar.urls)),
-#         ]
-#     except ImportError:
-#         pass

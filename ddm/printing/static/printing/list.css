@@ -1,0 +1,91 @@
+.written-form {
+    margin: 1em 0;
+}
+
+.written-form label {
+    font-size: 1.5em;
+}
+
+.written-form input, .written-form textarea {
+    font-size: 2em;
+    width: 100%;
+    border: 1px solid #999999;
+}
+
+h2 {
+    margin: 0 0 5px 0;
+}
+#option-name {
+    font-size: 2em;
+    width: 100%;
+}
+
+.score-key {
+    margin-top: 10px;
+}
+
+.score-key > div {
+    margin-bottom: 10px;
+}
+
+.score-key .alert {
+    display: table;
+    padding: 5px;
+    width: 100%;
+    margin: 0px;
+}
+
+.score-key .score {
+    display: table-cell;
+    font-size: 2em;
+    vertical-align: middle;
+}
+
+.score-key .desc {
+    display: table-cell;
+    padding-left: 10px;
+    vertical-align: middle;
+    font-style: italic;
+}
+
+td.scores {
+    text-align: right;
+    min-width: 230px;
+}
+
+td.scores .btn {
+    padding: 0px 10px;
+}
+
+.table {
+    margin-bottom: 10px;
+}
+
+.table tbody tr td {
+    padding: 2px 8px;
+}
+
+.table>tbody>tr>th {
+    border-top: none;
+}
+
+@media print {
+    .navbar {
+        display: none !important;;
+    }
+    #sidebar {
+        display: none !important;;
+    }
+    .fa-navicon {
+        display: none !important;;
+    }
+    #djDebug {
+        display: none !important;
+    }
+    table {
+        page-break-inside: avoid;
+    }
+    .score-key .score {
+        font-size: 1.2em;
+    }
+}

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ddm.categories',
     'ddm.weighting',
     'ddm.scoring',
+    'ddm.printing',
 ]
 
 MIDDLEWARE_CLASSES = [

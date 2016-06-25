@@ -1,0 +1,76 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'printing/list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6">
+            <h2><i class="fa fa-check-square-o"></i> Score Sheet</h2>
+        </div>
+        <div class="col-xs-6">
+            <input type="text" id="option-name">
+        </div>
+    </div>
+
+    <div class="row score-key">
+        <div class="col-xs-6 col-sm-3">
+            <div class="alert alert-danger">
+                <span class="score">0</span>
+                <span class="desc">Definitely no match / impossible</span>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-3">
+            <div class="alert alert-warning">
+                <span class="score">1&2</span>
+                <span class="desc">Unlikely / requiring huge resources</span>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-3">
+            <div class="alert alert-info">
+                <span class="score">3&4</span>
+                <span class="desc">Possible with effort and/or money</span>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-3">
+            <div class="alert alert-success">
+                <span class="score">5</span>
+                <span class="desc">Matches absolutely / no work needed</span>
+            </div>
+        </div>
+    </div>
+
+    {% for category in categories %}
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th colspan="7">{{ category.name }}</th>
+                </tr>
+                {% for criterion in category.criteria.all %}
+                <tr>
+                    <td>{{ criterion.name }}</td>
+                    <td class="scores">
+                        <div class="btn btn-default">0</div>
+                        <div class="btn btn-default">1</div>
+                        <div class="btn btn-default">2</div>
+                        <div class="btn btn-default">3</div>
+                        <div class="btn btn-default">4</div>
+                        <div class="btn btn-default">5</div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                <td colspan="4">No criteria in this category</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+
+{% endblock %}
