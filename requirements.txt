@@ -1,0 +1,2 @@
+-r ddm_example/requirements.txt
+-e .

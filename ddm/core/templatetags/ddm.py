@@ -2,6 +2,7 @@ from django import template
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
+from ddm import defaults
 from ddm.core.models import Score, Criterion
 
 register = template.Library()
@@ -109,3 +110,19 @@ def get_fitness_lookup(option, user=None):
 @register.assignment_tag()
 def get_category_fitness(category, option, user=None):
     return category.get_total_fitness_for_user(option, user) if user else category.get_total_fitness(option)
+
+
+@register.simple_tag()
+def score_min(): return defaults.DDM_SCORE_MIN
+
+
+@register.simple_tag()
+def score_max(): return defaults.DDM_SCORE_MAX
+
+
+@register.simple_tag()
+def weight_min(): return defaults.DDM_WEIGHT_MIN
+
+
+@register.simple_tag()
+def weight_max(): return defaults.DDM_WEIGHT_MAX

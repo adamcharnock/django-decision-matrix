@@ -35,6 +35,12 @@ html, body {
     overflow: hidden;
 }
 
+#sidebar > .nav>li>a>.fa {
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+}
+
 #main {
     padding: 15px;
     left: 0;

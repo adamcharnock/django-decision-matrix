@@ -1,5 +1,5 @@
 {% extends 'base/layout.html' %}
-{% load bootstrap3 static %}
+{% load bootstrap3 static ddm %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -32,7 +32,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Score ({{ SCORE_MIN }} - {{ SCORE_MAX }})</th>
+            <th>Score ({% score_min %} - {% score_max %})</th>
             <th></th>
         </tr>
     </thead>
@@ -47,7 +47,7 @@
                 <td class="value">
                     <form action="{% url 'scoring:update' option.uuid criterion.uuid %}" method="post">
                         {% csrf_token %}
-                        <input type="number" name="value" value="{{ score.value }}" min="{{ SCORE_MIN }}" max="{{ SCORE_MAX }}" >
+                        <input type="number" name="value" value="{{ score.value }}" min="{% score_min %}" max="{% score_max %}" >
                         <span class="status"></span>
                     </form>
                 </td>

@@ -17,13 +17,9 @@ setup(
     description='Django app for using weighted attribute matrices for making complex decisions',
     long_description=open('README.rst').read() if exists("README.rst") else "",
     install_requires=[
-        'path.py',
         'django>=1.9',
         'django-extensions',
         'django-smalluuid>=0.1.2',
         'django-bootstrap3>=7.0.1',
-        'dj_database_url',
-        'gunicorn',
-        'psycopg2',
     ],
 )
