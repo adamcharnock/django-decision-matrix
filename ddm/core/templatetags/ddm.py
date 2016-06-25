@@ -112,6 +112,22 @@ def get_category_fitness(category, option, user=None):
     return category.get_total_fitness_for_user(option, user) if user else category.get_total_fitness(option)
 
 
+@register.filter()
+def weight_in_words(weight):
+    for cutoff, word in defaults.DDM_WEIGHT_WORDS:
+        if weight >= cutoff:
+            return word
+    return '-'
+
+
+@register.filter()
+def weight_as_index(weight):
+    for i, (cutoff, word) in enumerate(defaults.DDM_WEIGHT_WORDS):
+        if weight >= cutoff:
+            return i
+    return None
+
+
 @register.simple_tag()
 def score_min(): return defaults.DDM_SCORE_MIN
 
@@ -121,7 +137,8 @@ def score_max(): return defaults.DDM_SCORE_MAX
 
 
 @register.simple_tag()
-def weight_min(): return defaults.DDM_WEIGHT_MIN
+def weight_min():
+    return defaults.DDM_WEIGHT_MIN
 
 
 @register.simple_tag()

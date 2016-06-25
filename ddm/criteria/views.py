@@ -40,3 +40,15 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_success_url(self):
         return reverse('criteria:list')
+
+
+class ReportView(LoginRequiredMixin, generic.ListView):
+    template_name = 'criteria/report.html'
+    model = Criterion
+    context_object_name = 'criteria'
+
+    def get_queryset(self):
+        queryset = super(ReportView, self).get_queryset()
+        queryset = list(queryset)
+        queryset = sorted(queryset, key=lambda c: c.get_average_weight(), reverse=True)
+        return queryset

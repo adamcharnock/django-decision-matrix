@@ -1,0 +1,41 @@
+{% extends 'base/layout.html' %}
+{% load static bootstrap3 ddm %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'criteria/report.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2><i class="fa fa-check-square-o"></i> Criteria</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Criteria</th>
+                <th>Weight</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for criterion in criteria %}
+                {% with criterion.get_average_weight as weight %}
+                <tr class="importance-{{ weight|weight_as_index }}">
+                    <td>{{ criterion.category.name }}</td>
+                    <td>{{ criterion.name }}</td>
+                    <td>{{ weight }}</td>
+                    <td>{{ weight|weight_in_words }}</td>
+                </tr>
+                {% endwith %}
+            {% empty %}
+                <tr>
+                    <td>No criteria</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
+{% endblock %}
