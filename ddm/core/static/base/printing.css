@@ -1,0 +1,14 @@
+@media print {
+    .navbar {
+        display: none !important;;
+    }
+    #sidebar {
+        display: none !important;;
+    }
+    .fa-navicon {
+        display: none !important;;
+    }
+    #djDebug {
+        display: none !important;
+    }
+}

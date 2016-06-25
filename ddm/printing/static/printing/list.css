@@ -70,18 +70,6 @@ td.scores .btn {
 }
 
 @media print {
-    .navbar {
-        display: none !important;;
-    }
-    #sidebar {
-        display: none !important;;
-    }
-    .fa-navicon {
-        display: none !important;;
-    }
-    #djDebug {
-        display: none !important;
-    }
     table {
         page-break-inside: avoid;
     }

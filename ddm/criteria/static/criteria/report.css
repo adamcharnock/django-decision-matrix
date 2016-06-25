@@ -1,11 +1,37 @@
-.importance-0 {
-    background-color: lightgoldenrodyellow;
+.criteria-report tbody .importance-0 {
+    background-color: #E6DCB2 !important;
+    -webkit-print-color-adjust: exact;
 }
 
-.importance-1 {
-    background-color: lightgoldenrodyellow;
+.criteria-report tbody .importance-1 {
+    background-color: #ECE5C5 !important;
+    -webkit-print-color-adjust: exact;
 }
 
-.importance-1 {
-    background-color: lightgoldenrodyellow;
+.importance-2 {
+    background-color: #F2EDD8 !important;
+    -webkit-print-color-adjust: exact;
+}
+
+.importance-3 {
+    background-color: #F8F6EB !important;
+    -webkit-print-color-adjust: exact;
+    color: #666666;
+}
+
+.importance-4 {
+    background-color: #FFFFFF !important;
+    -webkit-print-color-adjust: exact;
+    color: #666666;
+}
+
+.importance-0 .weight-words { font-weight: bold; }
+.importance-1 .weight-words { font-weight: bold; }
+.importance-2 .weight-words { font-style: italic; }
+
+
+@media print {
+    .table td, .table th {
+        background-color: transparent !important;
+    }
 }

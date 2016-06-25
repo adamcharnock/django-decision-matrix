@@ -9,7 +9,7 @@
 {% block content %}
     <h2><i class="fa fa-check-square-o"></i> Criteria</h2>
 
-    <table class="table table-hover">
+    <table class="table criteria-report">
         <thead>
             <tr>
                 <th>Category</th>
@@ -21,12 +21,19 @@
         <tbody>
             {% for criterion in criteria %}
                 {% with criterion.get_average_weight as weight %}
-                <tr class="importance-{{ weight|weight_as_index }}">
-                    <td>{{ criterion.category.name }}</td>
-                    <td>{{ criterion.name }}</td>
-                    <td>{{ weight }}</td>
-                    <td>{{ weight|weight_in_words }}</td>
-                </tr>
+                    {% ifchanged weight|weight_as_index %}
+                        {% if not forloop.first %}
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                            </tr>
+                        {% endif %}
+                    {% endifchanged %}
+                    <tr class="importance-{{ weight|weight_as_index }}">
+                        <td class="category">{{ criterion.category.name }}</td>
+                        <td class="name">{{ criterion.name }}</td>
+                        <td class="weight">{{ weight }}</td>
+                        <td class="weight-words">{{ weight|weight_in_words }}</td>
+                    </tr>
                 {% endwith %}
             {% empty %}
                 <tr>
@@ -36,6 +43,4 @@
         </tbody>
     </table>
 
-
-    <a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
 {% endblock %}
