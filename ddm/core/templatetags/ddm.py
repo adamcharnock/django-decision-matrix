@@ -66,7 +66,8 @@ def get_fitness(option, user=None):
 @register.assignment_tag(takes_context=True)
 def get_everyone_else_fitness(context, option):
     # Get the overall average fitness for the given open for all users except the current
-    return option.get_fitness(get_user_model().objects.filter(~Q(pk=context['request'].user.pk)))
+    users = get_user_model().objects.filter(~Q(pk=context['request'].user.pk)).all()
+    return option.get_fitness(users)
 
 
 @register.assignment_tag(takes_context=True)
