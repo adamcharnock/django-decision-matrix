@@ -1,1 +1,1 @@
-web: gunicorn ddm.wsgi:application --log-file -
+web: gunicorn ddm_example.wsgi:application --log-file -
