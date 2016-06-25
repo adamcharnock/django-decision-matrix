@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 
 from ddm.core.models import Criterion, Category
+from ddm.core.views import SortView as BaseSortView
 
 
 class ListView(LoginRequiredMixin, generic.ListView):
@@ -52,3 +53,13 @@ class ReportView(LoginRequiredMixin, generic.ListView):
         queryset = list(queryset)
         queryset = sorted(queryset, key=lambda c: c.get_average_weight(), reverse=True)
         return queryset
+
+
+class SortView(LoginRequiredMixin, BaseSortView):
+    model = Criterion
+
+    def get_success_url(self):
+        return reverse('criteria:list')
+
+    def get_all_objects(self):
+        return self.model.objects.filter(category=self.object.category).order_by('order_num')

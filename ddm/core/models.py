@@ -55,10 +55,11 @@ class Criterion(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
     category = models.ForeignKey('category', related_name='criteria')
     name = models.CharField(max_length=200)
+    order_num = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'criteria'
-        ordering = ['category__name', 'name']
+        ordering = ['category__name', 'order_num']
 
     def __str__(self):
         return self.name or 'Unnamed Criterion'

@@ -26,10 +26,22 @@
                             <button class="btn btn-danger btn-xs">Delete</button>
                         </form>
                     </td>
+                    <td>
+                        <form action="{% url 'criteria:up' criterion.uuid %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'criteria:down' criterion.uuid %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
+                        </form>
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
-                <td colspan="4">No criteria in this category</td>
+                    <td colspan="4">No criteria in this category</td>
                 </tr>
                 {% endfor %}
             {% endfor %}
