@@ -16,6 +16,8 @@
                 <th>Criteria</th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +35,18 @@
                             <button class="btn btn-danger btn-xs">Delete</button>
                         </form>
                         {% endif %}
+                    </td>
+                    <td>
+                        <form action="{% url 'categories:up' category.uuid %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'categories:down' category.uuid %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-default"><i class="fa fa-arrow-down"></i></button>
+                        </form>
                     </td>
                 </tr>
                 {% endwith %}

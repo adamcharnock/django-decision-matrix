@@ -134,13 +134,19 @@ class Score(TimeStampedModel):
 class Category(TimeStampedModel):
     uuid = SmallUUIDField(default=uuid_default())
     name = models.CharField(max_length=200)
+    order_num = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'categories'
-        ordering = ['name']
+        ordering = ['order_num']
 
     def __str__(self):
         return self.name or 'Unnamed Category'
+
+    def save(self, **kwargs):
+        if self.order_num is None:
+            self.order_num = Category.objects.count()
+        super(Category, self).save(**kwargs)
 
     def get_average_weight(self, *a, **kw):
         res = Weight.objects.filter(criterion__category=self, **kw).aggregate(Avg('value'))
@@ -180,5 +186,4 @@ class Category(TimeStampedModel):
         if total_fitness is None or total_weight is None:
             return None
         else:
-            import pdb; pdb.set_trace()
             return total_fitness / total_weight
