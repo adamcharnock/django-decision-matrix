@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase as BaseTestCase
 
-from ddm.core.models import Category, Criterion, Weight, Option, Score
+from ddm.core.abstract_models import Category, Criterion, Weight, Option, Score
 
 
 def get_name(klass):

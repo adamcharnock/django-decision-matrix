@@ -1,6 +1,4 @@
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseNotAllowed, HttpResponseRedirect
-from django.shortcuts import render
 from django.views import generic
 
 

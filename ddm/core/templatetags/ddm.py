@@ -1,9 +1,12 @@
 from django import template
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
 from ddm import defaults
-from ddm.core.models import Score, Criterion
+
+Criterion = apps.get_model('core', 'Criterion')
+Score = apps.get_model('core', 'Score')
 
 register = template.Library()
 

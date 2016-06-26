@@ -1,11 +1,13 @@
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion, Category
 from ddm.core.views import SortView as BaseSortView
 
+Criterion = apps.get_model('core', 'Criterion')
+Category = apps.get_model('core', 'Category')
 
 class ListView(LoginRequiredMixin, generic.ListView):
     template_name = 'criteria/list.html'

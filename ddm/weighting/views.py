@@ -1,13 +1,16 @@
 import json
 
 from django import forms
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion, Weight, Category
+Criterion = apps.get_model('core', 'Criterion')
+Weight = apps.get_model('core', 'Weight')
+Category = apps.get_model('core', 'Category')
 
 
 def get_weight(criterion, user):

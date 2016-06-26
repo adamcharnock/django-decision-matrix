@@ -1,6 +1,12 @@
 from django import template
+from django.apps import apps
 
-from ddm.core.models import Score, Criterion, Option, Weight, get_total_complete_options
+from ddm.core.abstract_models import get_total_complete_options
+
+Score = apps.get_model('core', 'Score')
+Criterion = apps.get_model('core', 'Criterion')
+Option = apps.get_model('core', 'Option')
+Weight = apps.get_model('core', 'Weight')
 
 register = template.Library()
 

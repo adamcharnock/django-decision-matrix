@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import Form
 from django.http.response import HttpResponse, HttpResponseRedirect, HttpResponseNotAllowed
@@ -5,8 +6,9 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from ddm.core.models import Category
 from ddm.core.views import SortView as BaseSortView
+
+Category = apps.get_model('core', 'Category')
 
 
 class ListView(LoginRequiredMixin, generic.ListView):

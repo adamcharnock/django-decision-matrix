@@ -1,8 +1,9 @@
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 
-from ddm.core.models import Category
+Category = apps.get_model('core', 'Category')
 
 
 class CriteriaList(LoginRequiredMixin, generic.ListView):

@@ -18,3 +18,8 @@ DDM_WEIGHT_WORDS = (
 # Variances in scores/weights above this value will
 # be flagged up
 VARIANCE_CUTOFF = getattr(settings, 'VARIANCE_CUTOFF', 1.0)
+
+DDM_EXTENSIONS = getattr(settings, 'DDM_EXTENSIONS', {
+    # Example:
+    # 'ddm.core.models.Criterion': ['my_app.extensions.CriterionExtension'],
+})

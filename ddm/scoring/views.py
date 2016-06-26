@@ -1,13 +1,17 @@
 import json
 
 from django import forms
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from ddm.core.models import Criterion, Option, Score, Category
+Criterion = apps.get_model('core', 'Criterion')
+Option = apps.get_model('core', 'Option')
+Score = apps.get_model('core', 'Score')
+Category = apps.get_model('core', 'Category')
 
 
 def get_score(criterion, option, user):

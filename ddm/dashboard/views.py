@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
@@ -5,7 +6,9 @@ from django.shortcuts import render
 from django.views import generic
 
 from ddm import defaults
-from ddm.core.models import Criterion, Option
+
+Option = apps.get_model('core', 'Option')
+Criterion = apps.get_model('core', 'Criterion')
 
 
 class HomeView(LoginRequiredMixin, generic.TemplateView):
