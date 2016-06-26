@@ -1,0 +1,4 @@
+{% load ddm %}Disagreement on this score:<br>{% get_criteria_scores option criterion as scores %}
+{% for score in scores %}
+{% firstof score.user.get_full_name score.user.username %}: {{ score.value }}<br>
+{% endfor %}

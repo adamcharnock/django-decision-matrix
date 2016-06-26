@@ -78,6 +78,10 @@ def get_user_fitness(context, option):
 
 
 @register.assignment_tag()
+def get_criteria_scores(option, criterion):
+    return Score.objects.filter(option=option, criterion=criterion)
+
+@register.assignment_tag()
 def get_weight_lookup(user=None):
     # Get a dictionary of criterion to weight values
     kw = remove_none_values(user=user)
@@ -118,6 +122,11 @@ def weight_in_words(weight):
         if weight >= cutoff:
             return word
     return '-'
+
+
+@register.assignment_tag()
+def get_criteria_score_variance(criterion, **kwargs):
+    return criterion.get_score_variance(**kwargs)
 
 
 @register.filter()

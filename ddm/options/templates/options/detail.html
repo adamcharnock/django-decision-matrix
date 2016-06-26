@@ -55,7 +55,21 @@
                     <tr class="criterion">
                         <td>{{ criterion.name }}</td>
                         <td class="weight">{{ weight_lookup|get:criterion|show_average }}</td>
-                        <td class="score">{{ score_lookup|get:criterion|show_average }}</td>
+
+                        <td class="score">
+                            {% get_criteria_score_variance criterion option=option as variance %}
+                            {% with score=score_lookup|get:criterion|show_average %}
+                                {% if variance > VARIANCE_CUTOFF %}
+                                    <span
+                                            data-toggle="tooltip"
+                                            title="{% include 'options/includes/disagreement_tip.html' with criteria=criteria %}"
+                                            class="label label-warning">{{ score }}</span>
+                                {% else %}
+                                    {{ score }}
+                                {% endif %}
+                            {% endwith %}
+                        </td>
+                    
                         <td class="fitness">{{ fitness_lookup|get:criterion|show_average }}</td>
                     </tr>
                 {% empty %}

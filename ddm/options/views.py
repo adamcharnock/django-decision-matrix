@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.views import generic
 
+from ddm import defaults
 from ddm.core.models import Option, Criterion, Category
 
 
@@ -74,5 +75,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
             categories=Category.objects.all(),
             for_user=for_user,
             user_form=user_form,
+            VARIANCE_CUTOFF=defaults.VARIANCE_CUTOFF
         )
         return context

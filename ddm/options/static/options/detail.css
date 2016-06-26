@@ -17,6 +17,13 @@
     font-style: italic;
 }
 
+#score-detail .score .label {
+    border-bottom: none;
+    font-size: inherit;
+    font-size: 95%;
+    padding: .1em .3em .15em;
+}
+
 
 .fitness .value {
     font-size: 80px;
