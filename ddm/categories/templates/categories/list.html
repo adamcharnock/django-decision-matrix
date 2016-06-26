@@ -17,7 +17,6 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -36,13 +35,11 @@
                         </form>
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="sorting">
                         <form action="{% url 'categories:up' category.uuid %}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-default"><i class="fa fa-arrow-up"></i></button>
                         </form>
-                    </td>
-                    <td>
                         <form action="{% url 'categories:down' category.uuid %}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-default"><i class="fa fa-arrow-down"></i></button>

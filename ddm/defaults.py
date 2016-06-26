@@ -14,3 +14,7 @@ DDM_WEIGHT_WORDS = (
     (1.0, 'Unimportant'),
     (0, 'Irrelevant'),
 )
+
+# Variances in scores/weights above this value will
+# be flagged up
+VARIANCE_CUTOFF = getattr(settings, 'VARIANCE_CUTOFF', 1.0)

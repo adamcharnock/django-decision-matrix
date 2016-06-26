@@ -4,6 +4,8 @@
         {% get_total_incomplete_options as total_incomplete_options %}
         {% get_total_weightings_missing as total_weightings_missing %}
 
+        {% include 'base/sidebar_url.html' with url='dashboard:home' name='Dashboard' icon='tachometer' %}
+
         {% if total_incomplete_options %}
             {% include 'base/sidebar_url.html' with url='options:list' name='Options' icon='cubes' count=total_incomplete_options count_style="warning" %}
         {% else %}

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'bootstrap3',
     'ddm.core',
+    'ddm.dashboard',
     'ddm.options',
     'ddm.criteria',
     'ddm.categories',

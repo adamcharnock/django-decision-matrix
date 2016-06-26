@@ -1,0 +1,9 @@
+/*Css which is used across multiple apps*/
+
+td.sorting {
+    text-align: right;
+}
+
+td.sorting form {
+    display: inline-block;
+}

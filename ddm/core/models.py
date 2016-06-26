@@ -1,3 +1,4 @@
+import statistics
 from functools import lru_cache
 
 from django.conf import settings
@@ -64,6 +65,11 @@ class Criterion(TimeStampedModel):
     def __str__(self):
         return self.name or 'Unnamed Criterion'
 
+    def save(self, **kwargs):
+        if self.order_num is None:
+            self.order_num = Criterion.objects.count()
+        super(Criterion, self).save(**kwargs)
+
     @lru_cache()
     def get_average_weight(self, *a, **kw):
         res = self.weights.filter(*a, **kw).aggregate(Avg('value'))
@@ -89,6 +95,22 @@ class Criterion(TimeStampedModel):
             users = tuple(users)
 
         return self._get_fitness(option, users)
+
+    @lru_cache()
+    def get_score_variance(self, *args, **kwargs):
+        scores = Score.objects.filter(criterion=self, *args, **kwargs).values_list('value', flat=True)
+        try:
+            return statistics.variance(scores)
+        except statistics.StatisticsError:
+            return 0
+
+    def get_weight_variance(self, *args, **kwargs):
+        weights = Weight.objects.filter(criterion=self, *args, **kwargs).values_list('value', flat=True)
+        try:
+            return statistics.variance(weights)
+        except statistics.StatisticsError:
+            return 0
+
 
     @lru_cache()
     def _get_fitness(self, option, users):

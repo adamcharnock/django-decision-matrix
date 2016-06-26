@@ -1,0 +1,80 @@
+{% extends 'base/layout.html' %}
+{% load bootstrap3 static ddm %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'dashboard/home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2><i class="fa fa-tachometer"></i> Dashboard</h2>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <h4><i class="fa fa-cubes"></i> Best Options</h4>
+            <p>Current leading options</p>
+            <ul>
+                {% for option in best_options|slice:':5' %}
+                    <li>{{ option.name }} {{ option.get_fitness|show_average }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-2">
+            <h4><i class="fa fa-user"></i> Most up-to-date users</h4>
+            <p>Users who have completed the most scores</p>
+            <ul>
+                {% for user in up_to_date_users|slice:':5' %}
+                    <li>{% firstof user.get_full_name user.username %} {{ user.num_scores }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <h4><i class="fa fa-group"></i> Discordant Priorities</h4>
+            <p>Criteria whos importance users are <strong>least consistent</strong> about</p>
+            <ul>
+                {% for criterion in criteria_by_weight_variance_high|slice:':5' %}
+                    <li>{{ criterion }} {{ criterion.get_weight_variance|show_average }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-2">
+            <h4><i class="fa fa-group"></i> Common Priorities</h4>
+            <p>Criteria whos importance users are <strong>most consistent</strong> about</p>
+            <ul>
+                {% for criterion in criteria_by_weight_variance_low|slice:':5' %}
+                    <li>{{ criterion }} {{ criterion.get_weight_variance|show_average }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <h4><i class="fa fa-cubes"></i> Option Variability</h4>
+            <p>Criteria that score the most variably across options</p>
+            <ul>
+                {% for criterion in criteria_by_score_variance_high|slice:':5' %}
+                    <li>{{ criterion }} {{ criterion.get_score_variance|show_average }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-2">
+            <h4><i class="fa fa-cubes"></i> Option Consistency</h4>
+            <p>Criteria that score the most consistently across options</p>
+            <ul>
+                {% for criterion in criteria_by_score_variance_low|slice:':5' %}
+                    <li>{{ criterion }} {{ criterion.get_score_variance|show_average }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}
