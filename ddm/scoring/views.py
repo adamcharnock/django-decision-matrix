@@ -8,10 +8,10 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-Criterion = apps.get_model('core', 'Criterion')
-Option = apps.get_model('core', 'Option')
-Score = apps.get_model('core', 'Score')
-Category = apps.get_model('core', 'Category')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Option = apps.get_model('ddm_core', 'Option')
+Score = apps.get_model('ddm_core', 'Score')
+Category = apps.get_model('ddm_core', 'Category')
 
 
 def get_score(criterion, option, user):

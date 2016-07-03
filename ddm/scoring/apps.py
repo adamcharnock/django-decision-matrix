@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class WeightingConfig(AppConfig):
-    name = 'weighting'
+class ScoringConfig(AppConfig):
+    name = 'ddm.scoring'
+    label = 'ddm_scoring'

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'ddm.categories',
     'ddm.weighting',
     'ddm.scoring',
+    'ddm.ui_common',
     'ddm.printing',
 ]
 
@@ -163,3 +164,4 @@ try:
     INSTALLED_APPS.append('debug_toolbar')
 except ImportError:
     pass
+

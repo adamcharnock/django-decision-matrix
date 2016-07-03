@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class DashboardConfig(AppConfig):
-    name = 'dashboard'
+    name = 'ddm.dashboard'
+    label = 'ddm_dashboard'

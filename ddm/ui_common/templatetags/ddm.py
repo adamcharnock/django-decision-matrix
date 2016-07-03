@@ -5,8 +5,8 @@ from django.db.models import Q
 
 from ddm import defaults
 
-Criterion = apps.get_model('core', 'Criterion')
-Score = apps.get_model('core', 'Score')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Score = apps.get_model('ddm_core', 'Score')
 
 register = template.Library()
 

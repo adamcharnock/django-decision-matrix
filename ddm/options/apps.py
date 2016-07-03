@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class OptionsConfig(AppConfig):
-    name = 'options'
+    name = 'ddm.options'
+    label = 'ddm_options'

@@ -14,8 +14,8 @@ from ddm import defaults
 
 
 def get_total_complete_options(user):
-    Criterion = apps.get_model('core', 'Criterion')
-    Score = apps.get_model('core', 'Score')
+    Criterion = apps.get_model('ddm_core', 'Criterion')
+    Score = apps.get_model('ddm_core', 'Score')
 
     total_criteria = Criterion.objects.count()
     res = Score.objects.filter(user=user).\
@@ -33,12 +33,13 @@ class AbstractOption(TimeStampedModel):
     class Meta:
         abstract = True
         ordering = ['name']
+        app_label = 'ddm_core'
 
     def get_fitness_for_user(self, user):
         return self.get_fitness([user])
 
     def get_fitness(self, users=None):
-        Criterion = apps.get_model('core', 'Criterion')
+        Criterion = apps.get_model('ddm_core', 'Criterion')
 
         if users is None:
             users = get_user_model().objects.all()
@@ -52,8 +53,8 @@ class AbstractOption(TimeStampedModel):
             return None
 
     def get_completed_users(self):
-        Criterion = apps.get_model('core', 'Criterion')
-        Score = apps.get_model('core', 'Score')
+        Criterion = apps.get_model('ddm_core', 'Criterion')
+        Score = apps.get_model('ddm_core', 'Score')
 
         total_criteria = Criterion.objects.count()
         res = Score.objects.filter(option=self).\
@@ -75,14 +76,15 @@ class AbstractCriterion(TimeStampedModel):
         abstract = True
         verbose_name_plural = 'criteria'
         ordering = ['category__name', 'order_num']
-        app_label = 'core'
+        app_label = 'ddm_core'
         db_table = 'core_criterion'
+        app_label = 'ddm_core'
 
     def __str__(self):
         return self.name or 'Unnamed Criterion'
 
     def save(self, **kwargs):
-        Criterion = apps.get_model('core', 'Criterion')
+        Criterion = apps.get_model('ddm_core', 'Criterion')
 
         if self.order_num is None:
             self.order_num = Criterion.objects.count()
@@ -116,7 +118,7 @@ class AbstractCriterion(TimeStampedModel):
 
     @lru_cache()
     def get_score_variance(self, *args, **kwargs):
-        Score = apps.get_model('core', 'Score')
+        Score = apps.get_model('ddm_core', 'Score')
 
         scores = Score.objects.filter(criterion=self, *args, **kwargs).values_list('value', flat=True)
         try:
@@ -125,7 +127,7 @@ class AbstractCriterion(TimeStampedModel):
             return 0
 
     def get_weight_variance(self, *args, **kwargs):
-        Weight = apps.get_model('core', 'Weight')
+        Weight = apps.get_model('ddm_core', 'Weight')
 
         weights = Weight.objects.filter(criterion=self, *args, **kwargs).values_list('value', flat=True)
         try:
@@ -159,6 +161,7 @@ class AbstractWeight(TimeStampedModel):
 
     class Meta:
         abstract = True
+        app_label = 'ddm_core'
         unique_together = (
             ('user', 'criterion'),
         )
@@ -173,6 +176,7 @@ class AbstractScore(TimeStampedModel):
 
     class Meta:
         abstract = True
+        app_label = 'ddm_core'
         unique_together = (
             ('user', 'option', 'criterion'),
         )
@@ -185,6 +189,7 @@ class AbstractCategory(TimeStampedModel):
 
     class Meta:
         abstract = True
+        app_label = 'ddm_core'
         verbose_name_plural = 'categories'
         ordering = ['order_num']
 
@@ -192,24 +197,24 @@ class AbstractCategory(TimeStampedModel):
         return self.name or 'Unnamed Category'
 
     def save(self, **kwargs):
-        Category = apps.get_model('core', 'Category')
+        Category = apps.get_model('ddm_core', 'Category')
 
         if self.order_num is None:
             self.order_num = Category.objects.count()
         super(AbstractCategory, self).save(**kwargs)
 
     def get_average_weight(self, *a, **kw):
-        Weight = apps.get_model('core', 'Weight')
+        Weight = apps.get_model('ddm_core', 'Weight')
         res = Weight.objects.filter(criterion__category=self, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
     def get_total_weight(self, *a, **kw):
-        Weight = apps.get_model('core', 'Weight')
+        Weight = apps.get_model('ddm_core', 'Weight')
         res = Weight.objects.filter(criterion__category=self, **kw).aggregate(Sum('value'))
         return res['value__sum']
 
     def get_average_score(self, option, *a, **kw):
-        Score = apps.get_model('core', 'Score')
+        Score = apps.get_model('ddm_core', 'Score')
         res = Score.objects.filter(criterion__category=self, option=option, **kw).aggregate(Avg('value'))
         return res['value__avg']
 

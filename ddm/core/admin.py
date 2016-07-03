@@ -3,11 +3,11 @@ from django.contrib import admin
 from . import abstract_models
 
 
-Option = apps.get_model('core', 'Option')
-Criterion = apps.get_model('core', 'Criterion')
-Weight = apps.get_model('core', 'Weight')
-Score = apps.get_model('core', 'Score')
-Category = apps.get_model('core', 'Category')
+Option = apps.get_model('ddm_core', 'Option')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Weight = apps.get_model('ddm_core', 'Weight')
+Score = apps.get_model('ddm_core', 'Score')
+Category = apps.get_model('ddm_core', 'Category')
 
 
 @admin.register(Option)

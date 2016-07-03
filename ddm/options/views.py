@@ -8,9 +8,9 @@ from django.views import generic
 
 from ddm import defaults
 
-Option = apps.get_model('core', 'Option')
-Criterion = apps.get_model('core', 'Criterion')
-Category = apps.get_model('core', 'Category')
+Option = apps.get_model('ddm_core', 'Option')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Category = apps.get_model('ddm_core', 'Category')
 
 
 class ListView(LoginRequiredMixin, generic.ListView):

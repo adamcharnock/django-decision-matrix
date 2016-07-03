@@ -8,9 +8,9 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-Criterion = apps.get_model('core', 'Criterion')
-Weight = apps.get_model('core', 'Weight')
-Category = apps.get_model('core', 'Category')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Weight = apps.get_model('ddm_core', 'Weight')
+Category = apps.get_model('ddm_core', 'Category')
 
 
 def get_weight(criterion, user):

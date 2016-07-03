@@ -7,15 +7,15 @@ from django.views import generic
 
 from ddm import defaults
 
-Option = apps.get_model('core', 'Option')
-Criterion = apps.get_model('core', 'Criterion')
+Option = apps.get_model('ddm_core', 'Option')
+Criterion = apps.get_model('ddm_core', 'Criterion')
 
 
 class HomeView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'dashboard/home.html'
 
     def get_best_options(self):
-        options = sorted(Option.objects.all(), key=lambda c: c.get_fitness(), reverse=True)
+        options = sorted(Option.objects.all(), key=lambda c: c.get_fitness() or 0, reverse=True)
         return options
 
     def get_up_to_date_users(self):

@@ -8,7 +8,7 @@ from django.views import generic
 
 from ddm.core.views import SortView as BaseSortView
 
-Category = apps.get_model('core', 'Category')
+Category = apps.get_model('ddm_core', 'Category')
 
 
 class ListView(LoginRequiredMixin, generic.ListView):

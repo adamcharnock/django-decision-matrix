@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class categoriesConfig(AppConfig):
-    name = 'categories'
+class CategoriesConfig(AppConfig):
+    name = 'ddm.categories'
+    label = 'ddm_categories'

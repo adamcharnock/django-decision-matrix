@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class CriteriaConfig(AppConfig):
-    name = 'criteria'
+    name = 'ddm.criteria'
+    label = 'ddm_criteria'

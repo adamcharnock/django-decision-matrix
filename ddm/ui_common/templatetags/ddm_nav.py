@@ -3,10 +3,10 @@ from django.apps import apps
 
 from ddm.core.abstract_models import get_total_complete_options
 
-Score = apps.get_model('core', 'Score')
-Criterion = apps.get_model('core', 'Criterion')
-Option = apps.get_model('core', 'Option')
-Weight = apps.get_model('core', 'Weight')
+Score = apps.get_model('ddm_core', 'Score')
+Criterion = apps.get_model('ddm_core', 'Criterion')
+Option = apps.get_model('ddm_core', 'Option')
+Weight = apps.get_model('ddm_core', 'Weight')
 
 register = template.Library()
 
