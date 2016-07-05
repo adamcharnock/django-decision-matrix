@@ -42,10 +42,14 @@
                     <td colspan="4">No criteria in this category</td>
                 </tr>
                 {% endfor %}
+            {% empty %}
+                <tr>
+                    <td colspan="4">No criteria have been created</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
 
 
-    <a href="{% url 'criteria:create' %}" class="btn btn-primary">Create</a>
+    <a href="{% url 'criteria:create' %}" class="btn btn-primary">Create criteria</a>
 {% endblock %}
