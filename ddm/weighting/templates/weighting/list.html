@@ -40,7 +40,12 @@
                 </tr>
                 {% for criterion, weight in criterion_weights %}
                 <tr>
-                    <td>{{ criterion.name }}</td>
+                    <td>
+                        {{ criterion.name }}
+                        {% if criterion.weighting_notes %}
+                            <div class="notes">{{ criterion.weighting_notes }}</div>
+                        {% endif %}
+                    </td>
                     <td class="value">
                         <form action="{% url 'weighting:update' criterion.uuid %}" method="post">
                             {% csrf_token %}

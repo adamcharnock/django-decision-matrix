@@ -71,6 +71,8 @@ class AbstractCriterion(TimeStampedModel):
     category = models.ForeignKey('category', related_name='criteria')
     name = models.CharField(max_length=200)
     order_num = models.IntegerField()
+    weighting_notes = models.TextField(default='', blank=True)
+    scoring_notes = models.TextField(default='', blank=True)
 
     class Meta:
         abstract = True

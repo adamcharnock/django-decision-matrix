@@ -16,7 +16,7 @@ class ListView(LoginRequiredMixin, generic.ListView):
 
 
 class CreateView(LoginRequiredMixin, generic.CreateView):
-    fields = ['category', 'name']
+    fields = ['category', 'name', 'weighting_notes', 'scoring_notes']
     template_name = 'criteria/create.html'
     model = Criterion
 
@@ -25,7 +25,7 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class UpdateView(LoginRequiredMixin, generic.UpdateView):
-    fields = ['category', 'name']
+    fields = ['category', 'name', 'weighting_notes', 'scoring_notes']
     template_name = 'criteria/update.html'
     model = Criterion
     slug_field = 'uuid'

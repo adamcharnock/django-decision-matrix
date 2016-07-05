@@ -54,7 +54,12 @@
                 </tr>
                 {% for criterion in category.criteria.all %}
                 <tr>
-                    <td>{{ criterion.name }}</td>
+                    <td>
+                        {{ criterion.name }}
+                        {% if criterion.scoring_notes %}
+                            <div class="notes">{{ criterion.scoring_notes }}</div>
+                        {% endif %}
+                    </td>
                     <td class="scores">
                         <div class="btn btn-default">0</div>
                         <div class="btn btn-default">1</div>

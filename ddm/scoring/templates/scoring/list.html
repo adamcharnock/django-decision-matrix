@@ -43,7 +43,12 @@
             </tr>
             {% for criterion, score in criterion_scores %}
             <tr>
-                <td>{{ criterion.name }}</td>
+                <td>
+                    {{ criterion.name }}
+                    {% if criterion.scoring_notes %}
+                        <div class="notes">{{ criterion.scoring_notes }}</div>
+                    {% endif %}
+                </td>
                 <td class="value">
                     <form action="{% url 'scoring:update' option.uuid criterion.uuid %}" method="post">
                         {% csrf_token %}

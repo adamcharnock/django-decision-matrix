@@ -7,3 +7,9 @@ td.sorting {
 td.sorting form {
     display: inline-block;
 }
+
+.notes {
+    color: #666;
+    font-size: 12px;
+    margin-left: 10px;
+}
