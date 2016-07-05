@@ -1,5 +1,4 @@
 import statistics
-from functools import lru_cache
 
 from django.apps import apps
 from django.conf import settings
@@ -92,17 +91,14 @@ class AbstractCriterion(TimeStampedModel):
             self.order_num = Criterion.objects.count()
         super(AbstractCriterion, self).save(**kwargs)
 
-    @lru_cache()
     def get_average_weight(self, *a, **kw):
         res = self.weights.filter(*a, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
-    @lru_cache()
     def get_average_score(self, option, *a, **kw):
         res = self.scores.filter(option=option, *a, **kw).aggregate(Avg('value'))
         return res['value__avg']
 
-    @lru_cache()
     def get_fitness_for_user(self, option, user):
         weight = self.get_average_weight(user=user)
         score = self.get_average_score(option, user=user)
@@ -118,7 +114,6 @@ class AbstractCriterion(TimeStampedModel):
 
         return self._get_fitness(option, users)
 
-    @lru_cache()
     def get_score_variance(self, *args, **kwargs):
         Score = apps.get_model('ddm_core', 'Score')
 
@@ -137,8 +132,6 @@ class AbstractCriterion(TimeStampedModel):
         except statistics.StatisticsError:
             return 0
 
-
-    @lru_cache()
     def _get_fitness(self, option, users):
         fitnesses = []
         if users is None:
