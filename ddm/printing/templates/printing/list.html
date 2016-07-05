@@ -50,7 +50,11 @@
         <table class="table table-hover">
             <tbody>
                 <tr>
-                    <th colspan="7">{{ category.name }}</th>
+                    <th>{{ category.name }}</th>
+                    <th class="good-bad">
+                        <div class="pull-left">Bad</div>
+                        <div class="pull-right">Good</div>
+                    </th>
                 </tr>
                 {% for criterion in category.criteria.all %}
                 <tr>
