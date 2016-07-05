@@ -66,9 +66,9 @@
                         {{ option.name }}
                     </td>
                     {% get_user_scores option as user_scores %}
-                    {% widthratio user_scores.count total_criteria 100 as pc %}
+                    {% percentage user_scores.count total_criteria as pc %}
                     <td data-value="{{ pc }}">
-                        {% if pc == "100" %}
+                        {% if pc >= 80 %}
                             <span class="complete">{{ pc }}%</span>
                         {% else %}
                             <span class="incomplete">{{ pc }}%</span>
@@ -82,7 +82,7 @@
                     </td>
                     {% endwith %}
 
-                    {% if pc == "100" %}
+                    {% if pc >= 80 %}
                         <td>{{ user_fitness|show_average }}</td>
                         <td>{{ everyone_else_fitness|show_average }}</td>
                         <td>{{ fitness|show_average }}</td>
@@ -93,10 +93,10 @@
                     {% endif %}
 
                     <td>
-                        <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc == "100" %}btn-default{% else %}btn-success{% endif %} btn-xs">Score</a>
+                        <a href="{% url 'scoring:list' option.uuid %}" class="btn {% if pc >= 80 %}btn-default{% else %}btn-success{% endif %} btn-xs">Score</a>
                     </td>
                     <td>
-                        <a href="{% url 'options:detail' option.uuid %}" class="btn {% if pc == "100" %}btn-primary{% else %}btn-default{% endif %} btn-xs">View report</a>
+                        <a href="{% url 'options:detail' option.uuid %}" class="btn {% if pc >= 80 %}btn-primary{% else %}btn-default{% endif %} btn-xs">View report</a>
                     </td>
                     <td>
                         <a href="{% url 'options:update' option.uuid %}" class="btn btn-default btn-xs">Edit</a>

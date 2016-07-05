@@ -131,6 +131,11 @@ def weight_in_words(weight):
 def get_criteria_score_variance(criterion, **kwargs):
     return criterion.get_score_variance(**kwargs)
 
+@register.assignment_tag()
+def percentage(value, total):
+    pc = value / float(total) * 100
+    return int(round(pc))
+
 
 @register.filter()
 def weight_as_index(weight):
