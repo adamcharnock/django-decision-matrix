@@ -5,3 +5,11 @@
 .incomplete {
     color: #c22037;
 }
+
+th .form-group {
+    margin: 0px;
+}
+
+th .form-group select {
+    width: 100px;
+}

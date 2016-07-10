@@ -12,25 +12,25 @@ Category = apps.get_model('ddm_core', 'Category')
 
 @admin.register(Option)
 class OptionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'uuid', 'name']
 
 
 @admin.register(Criterion)
 class CriterionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'uuid', 'category', 'name', 'order_num']
 
 
 @admin.register(Weight)
 class WeightAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'uuid', 'user', 'criterion', 'value']
 
 
 @admin.register(Score)
 class ScoreAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'uuid', 'user', 'criterion', 'option', 'value']
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['pk', 'uuid', 'name', 'order_num']
 

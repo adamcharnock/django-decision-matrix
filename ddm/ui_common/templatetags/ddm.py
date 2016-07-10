@@ -68,9 +68,12 @@ def get_fitness(option, user=None):
 
 
 @register.assignment_tag(takes_context=True)
-def get_everyone_else_fitness(context, option):
-    # Get the overall average fitness for the given open for all users except the current
-    users = get_user_model().objects.filter(~Q(pk=context['request'].user.pk)).all()
+def get_group_fitness(context, option, group):
+    if not group:
+        # If no group, just get all users except the current one
+        users = get_user_model().objects.filter(~Q(pk=context['request'].user.pk)).all()
+    else:
+        users = get_user_model().objects.filter(groups=group).all()
     return option.get_fitness(users)
 
 
@@ -133,7 +136,10 @@ def get_criteria_score_variance(criterion, **kwargs):
 
 @register.assignment_tag()
 def percentage(value, total):
-    pc = value / float(total) * 100
+    if total:
+        pc = value / float(total) * 100
+    else:
+        pc = 0
     return int(round(pc))
 
 

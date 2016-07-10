@@ -2,11 +2,13 @@ from django import forms
 from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
 from ddm import defaults
+from ddm.options.forms import GroupForm
 
 Option = apps.get_model('ddm_core', 'Option')
 Criterion = apps.get_model('ddm_core', 'Criterion')
@@ -21,6 +23,17 @@ class ListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ListView, self).get_context_data(**kwargs)
         context['total_criteria'] = Criterion.objects.count()
+        context['group_form'] = GroupForm(data=self.request.GET)
+
+        group_id = self.request.GET.get('group')
+        if group_id:
+            try:
+                group_id = int(group_id)
+            except (ValueError, TypeError):
+                pass
+            else:
+                context['group'] = get_object_or_404(Group, pk=self.request.GET['group'])
+
         return context
 
 
